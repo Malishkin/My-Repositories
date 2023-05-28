@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <textarea id="input" rows="4" cols="50">
+    underscore_case
+      first_name
+    next_VARA
+    </textarea>
+    
+    <button onclick="convertToCamelCase()">Convert to CamelCase</button>
+    
+    <script>
+    function convertToCamelCase() {
+      let textarea = document.getElementById('input');
+      let lines = textarea.value.split('\n');
+      for (let i = 0; i < lines.length; i++) {
+        let words = lines[i].toLowerCase().trim().split('_');
+        for (let j = 1; j < words.length; j++) {
+          words[j] = words[j].charAt(0).toUpperCase() + words[j].slice(1);
+        }
+        lines[i] = words.join('');
+      }
+      textarea.value = lines.join('\n');
+    }
+    </script>
+    
+    </body>
+</html>
