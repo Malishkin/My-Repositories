@@ -28,7 +28,7 @@ document.querySelector('#poll').addEventListener('click', survey.logNewAnswer.bi
 // survey.printResults.call({answers: [5, 2, 3]}, 'string');
 
 
-Замыкания (Closures)
+// Замыкания (Closures)
 
 const safeBooking = function () {
   let passengerCount = 0;
