@@ -115,6 +115,9 @@
 
 // arrGreet('Hello')('Lilu');
 
+// const arrGreetings = greetingText => name => console.log(`${greetingText} ${name}!`);
+
+
 ///////////////////////////////////////////////////////////////
 // Методы call(), apply(), bind()
 
