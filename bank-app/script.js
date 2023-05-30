@@ -116,7 +116,10 @@ function createNickName(accounts) {
 // createNickName(accounts);
 // console.log(accounts);
 
-const filteredTrans = account1.transactions
-  .filter((x) => x > 0)
-  .reduce((acc, cur) => acc + cur, 0);
-console.log(filteredTrans);
+const transactions = [500, 250, -300, 5000, -850, -110, -170, 1100];
+
+const withDrawls = transactions.filter(function (trans) {
+  return trans < 0;
+});
+
+console.log(withDrawls);
