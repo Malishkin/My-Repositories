@@ -767,5 +767,12 @@ const transactionsEuro3 = transactions.map(
   (transaction) => transaction * usdToEuro
 );
 
-console.log("-----------------------");
-console.log(transactionsEuro3);
+const transAll = transactions.map((transaction, index, array) => {
+  if (transaction > 0) {
+    return `Transaction N ${index + 1}: ${transaction} was deposited`;
+  } else {
+    return `Transaction N ${index + 1}: ${transaction} was withdrawn`;
+  }
+});
+
+console.log(transAll);
