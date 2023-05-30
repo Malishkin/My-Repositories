@@ -64,3 +64,19 @@ const inputTransferAmount = document.querySelector('.form__input--amount');
 const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
+
+function displayTransactions(transactions) {
+  transactions.forEach(function (trans, index) {
+    const transactionRow = `
+   <div class="transactions__row">
+   <div class="transactions__type transactions__type--deposit">
+     2 депозит
+   </div>
+   <div class="transactions__date">2 дня назад</div>
+   <div class="transactions__value">5 000$</div>
+ </div>
+ `;
+  });
+}
+ 
+displayTransactions(account1.transactions);
