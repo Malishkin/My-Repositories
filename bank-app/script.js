@@ -101,7 +101,7 @@ const nickName = userName
   .map((word) => word[0])
   .join("");
 
-console.log(nickName1, nickName);
+// console.log(nickName1, nickName);
 
 function createNickName(accounts) {
   accounts.forEach(function (account) {
@@ -116,7 +116,7 @@ function createNickName(accounts) {
 // createNickName(accounts);
 // console.log(accounts);
 
-const transactions = [500, 250, -300, 5000, -850, -110, -170, 1100];
+const transactions = [500, 200, 1100, -800];
 
 // const withDrawls = transactions.filter(function (trans) {
 //   return trans < 0;
@@ -124,4 +124,33 @@ const transactions = [500, 250, -300, 5000, -850, -110, -170, 1100];
 
 // const deposits = transactions.filter((trans) => trans > 0);
 
+const balanceTrans = transactions.reduce((x, y) => x + y, 0);
+const balanceTrans1 = transactions.reduce(function (acc, item, index, arr) {
+  // console.log(`Iteration ${index}: ${acc}`);
+  return acc + item;
+}, 0);
 
+// console.log(balanceTrans1);
+// console.log("-------------------------------");
+// let sum = 0;
+// for (const trans of transactions) {
+//   sum += trans;
+//   console.log(sum);
+// }
+
+//Get min value of transactions
+
+const minValue = transactions.reduce((x, y) => {
+  if (x < y) {
+    return x;
+  } else {
+    return y;
+  }
+}, transactions[0]);
+
+const maxValue = transactions.reduce(
+  (x, y) => (x > y ? x : y),
+  transactions[0]
+);
+
+console.log(minValue, maxValue);
