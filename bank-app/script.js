@@ -160,3 +160,27 @@ const displayBalance = function (transactions) {
 };
 
 displayBalance(account1.transactions);
+
+const displayTotal = function (transactions) {
+  const depositTotal = transactions
+    .filter((transaction) => transaction > 0)
+    .reduce((x, y) => x + y, 0);
+  labelSumIn.textContent = `${depositTotal}$`;
+
+  const withdrawTotal = transactions
+    .filter((transaction) => transaction < 0)
+    .reduce((x, y) => x + y, 0);
+  labelSumOut.textContent = `${withdrawTotal}$`;
+
+  const interestTotal = transactions
+    .filter((transaction) => transaction > 0)
+    .map((deposit) => (deposit * account1.interest) / 100)
+    .filter((interest, index, array) => {
+      console.log(array);
+      return interest >= 5;
+    })
+    .reduce((x, y) => x + y, 0);
+  labelSumInterest.textContent = `${interestTotal}$`;
+};
+
+displayTotal(account1.transactions);
