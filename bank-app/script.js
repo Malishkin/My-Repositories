@@ -66,6 +66,7 @@ const inputCloseUsername = document.querySelector(".form__input--user");
 const inputClosePin = document.querySelector(".form__input--pin");
 
 function displayTransactions(transactions) {
+  containerTransactions.innerHTML = "";
   transactions.forEach(function (trans, index) {
     const transType = trans > 0 ? "deposit" : "withdrawal";
     const transactionRow = `
@@ -82,3 +83,5 @@ function displayTransactions(transactions) {
 }
 
 displayTransactions(account1.transactions);
+
+// console.log(containerTransactions.innerHTML);
