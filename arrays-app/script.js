@@ -751,3 +751,21 @@
 // verifyCats(catsJane1, catsJulia1);
 // console.log("====================================");
 // verifyCats(catsJane2, catsJulia2);
+
+const transactions = [300, 250, -500, 5000, -750, -180, 50, 1400, -350, -120];
+const usdToEuro = 0.9;
+const transactionsEuro = transactions.map((transaction, index) => {
+  transactions[index] = transaction * usdToEuro;
+  return transactions[index];
+});
+
+const transactionsEuro2 = transactions.map(function (transaction) {
+  return transaction * usdToEuro;
+});
+
+const transactionsEuro3 = transactions.map(
+  (transaction) => transaction * usdToEuro
+);
+
+console.log("-----------------------");
+console.log(transactionsEuro3);
