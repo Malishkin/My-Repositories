@@ -816,11 +816,11 @@
 //Method chaining
 const transactions = [300, 250, -500, 5000, -750, -180, 50, 1400, -350, -120];
 
-const chained =
-  transactions
-    .filter((transaction) => transaction < 0)
-    .map((transaction) => Math.abs(transaction) * 0.86)
-    .reduce((sum, transaction) => sum + transaction, 0) /
-  transactions.filter((transaction) => transaction < 0).length;
-
-console.log(chained);
+const chained = transactions
+  .filter((transaction) => transaction < 0)
+  .map((transaction, index, array) => {
+    console.log(array);
+    return Math.abs(transaction) * 0.86;
+  })
+  .reduce((sum, transaction) => sum + transaction, 0);
+console.log(chained + "\u20AC");
