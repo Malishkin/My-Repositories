@@ -824,3 +824,16 @@ const chained = transactions
   })
   .reduce((sum, transaction) => sum + transaction, 0);
 console.log(chained + "\u20AC");
+
+const getAverageHumanAge1 = function (catAges) {
+  const humanAges = catAges
+    .map((catAge) => (catAge <= 2 ? catAge * 10 : catAge * 7))
+    .filter((humanAge) => humanAge >= 18)
+    .reduce((sum, age, i, arr) => sum + age / arr.length, 0);
+  return humanAges;
+};
+
+const averageHumanAge1 = getAverageHumanAge1([7, 3, 2, 4, 1, 15, 8, 1, 9, 2]);
+const averageHumanAge2 = getAverageHumanAge1([1, 16, 12, 4, 5, 1, 3, 11, 7, 2]);
+console.log(averageHumanAge1);
+console.log(averageHumanAge2);
