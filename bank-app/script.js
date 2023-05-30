@@ -116,7 +116,7 @@ function createNickName(accounts) {
 // createNickName(accounts);
 // console.log(accounts);
 
-const transactions = [500, 200, 1100, -800];
+// const transactions = [500, 200, 1100, -800];
 
 // const withDrawls = transactions.filter(function (trans) {
 //   return trans < 0;
@@ -124,11 +124,11 @@ const transactions = [500, 200, 1100, -800];
 
 // const deposits = transactions.filter((trans) => trans > 0);
 
-const balanceTrans = transactions.reduce((x, y) => x + y, 0);
-const balanceTrans1 = transactions.reduce(function (acc, item, index, arr) {
-  // console.log(`Iteration ${index}: ${acc}`);
-  return acc + item;
-}, 0);
+// const balanceTrans = transactions.reduce((x, y) => x + y, 0);
+// const balanceTrans1 = transactions.reduce(function (acc, item, index, arr) {
+//   // console.log(`Iteration ${index}: ${acc}`);
+//   return acc + item;
+// }, 0);
 
 // console.log(balanceTrans1);
 // console.log("-------------------------------");
@@ -140,17 +140,23 @@ const balanceTrans1 = transactions.reduce(function (acc, item, index, arr) {
 
 //Get min value of transactions
 
-const minValue = transactions.reduce((x, y) => {
-  if (x < y) {
-    return x;
-  } else {
-    return y;
-  }
-}, transactions[0]);
+// const minValue = transactions.reduce((x, y) => {
+//   if (x < y) {
+//     return x;
+//   } else {
+//     return y;
+//   }
+// }, transactions[0]);
 
-const maxValue = transactions.reduce(
-  (x, y) => (x > y ? x : y),
-  transactions[0]
-);
+// const maxValue = transactions.reduce(
+//   (x, y) => (x > y ? x : y),
+//   transactions[0]
+// );
 
 // console.log(minValue, maxValue);
+const displayBalance = function (transactions) {
+  const balance = transactions.reduce((x, y) => x + y, 0);
+  labelBalance.textContent = `${balance}$`;
+};
+
+displayBalance(account1.transactions);

@@ -752,20 +752,20 @@
 // console.log("====================================");
 // verifyCats(catsJane2, catsJulia2);
 
-const transactions = [300, 250, -500, 5000, -750, -180, 50, 1400, -350, -120];
-const usdToEuro = 0.9;
-const transactionsEuro = transactions.map((transaction, index) => {
-  transactions[index] = transaction * usdToEuro;
-  return transactions[index];
-});
+// const transactions = [300, 250, -500, 5000, -750, -180, 50, 1400, -350, -120];
+// const usdToEuro = 0.9;
+// const transactionsEuro = transactions.map((transaction, index) => {
+//   transactions[index] = transaction * usdToEuro;
+//   return transactions[index];
+// });
 
-const transactionsEuro2 = transactions.map(function (transaction) {
-  return transaction * usdToEuro;
-});
+// const transactionsEuro2 = transactions.map(function (transaction) {
+//   return transaction * usdToEuro;
+// });
 
-const transactionsEuro3 = transactions.map(
-  (transaction) => transaction * usdToEuro
-);
+// const transactionsEuro3 = transactions.map(
+//   (transaction) => transaction * usdToEuro
+// );
 
 // const transAll1 = transactions.map((transaction, index, array) => {
 //   let description = "";
@@ -776,15 +776,51 @@ const transactionsEuro3 = transactions.map(
 //   }
 //   return description;
 // });
-const transAll2 = transactions.map(
-  (transaction, index) =>
-    `Transaction N ${index + 1}: ${Math.abs(transaction)} was ${
-      transaction > 0 ? "deposited" : "withdrawn"
-    }`
-);
+// const transAll2 = transactions.map(
+//   (transaction, index) =>
+//     `Transaction N ${index + 1}: ${Math.abs(transaction)} was ${
+//       transaction > 0 ? "deposited" : "withdrawn"
+//     }`
+// );
 // const transAll = transactions.map((transaction, index) => {
 //   let description = transaction > 0 ? "deposited" : "withdrawn";
 //   return `Transaction N ${index + 1}: ${Math.abs(transaction)} was ${description}`;
 // });
 
-console.log(transAll2);
+// console.log(transAll2);
+
+// function getAverageHumanAge(catAges) {
+//   // Преобразование возраста кошек в человеческий возраст
+//   let humanAges = catAges.map((catAge) =>
+//     catAge <= 2 ? catAge * 10 : catAge * 7
+//   );
+
+//   // Исключение кошек младше 18 лет
+//   let adultCats = humanAges.filter((humanAge) => humanAge >= 18);
+
+//   // Вычисление среднего возраста для всех оставшихся кошек
+//   let averageAge =
+//     adultCats.reduce((sum, age) => sum + age, 0) / adultCats.length;
+
+//   return averageAge;
+// }
+
+// // Тестовые данные
+// let catAges1 = [7, 3, 2, 4, 1, 15, 8, 1, 9, 2];
+// let catAges2 = [1, 16, 12, 4, 5, 1, 3, 11, 7, 2];
+
+// Вызов функции для обоих наборов тестовых данных
+// console.log(getAverageHumanAge(catAges1));
+// console.log(getAverageHumanAge(catAges2));
+
+//Method chaining
+const transactions = [300, 250, -500, 5000, -750, -180, 50, 1400, -350, -120];
+
+const chained =
+  transactions
+    .filter((transaction) => transaction < 0)
+    .map((transaction) => Math.abs(transaction) * 0.86)
+    .reduce((sum, transaction) => sum + transaction, 0) /
+  transactions.filter((transaction) => transaction < 0).length;
+
+console.log(chained);
