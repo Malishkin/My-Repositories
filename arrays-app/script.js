@@ -719,35 +719,35 @@
 
 // console.log(cats1);
 
-function verifyCats(catsJane, catsJulia) {
-  // Создаем неглубокую копию массива catsJane и удаляем с него первый и последний элементы
-  let catsJaneCorrected = catsJane.slice();
-  console.log("catsJaneCorrected: ", catsJaneCorrected);
-  catsJaneCorrected.shift();
-  catsJaneCorrected.pop();
-  console.log("catsJaneCorrected after shift and pop: ", catsJaneCorrected);
+// function verifyCats(catsJane, catsJulia) {
+//   // Создаем неглубокую копию массива catsJane и удаляем с него первый и последний элементы
+//   let catsJaneCorrected = catsJane.slice();
+//   // console.log("catsJaneCorrected: ", catsJaneCorrected);
+//   catsJaneCorrected.shift();
+//   catsJaneCorrected.pop();
+//   // console.log("catsJaneCorrected after shift and pop: ", catsJaneCorrected);
 
-  // Создаем массив с данными Жени (исправленными) и Юли
-  let catsCombined = catsJaneCorrected.concat(catsJulia);
+//   // Создаем массив с данными Жени (исправленными) и Юли
+//   let catsCombined = catsJaneCorrected.concat(catsJulia);
 
-  // Перебираем кошек и выводим информацию о каждой
-  for (let i = 0; i < catsCombined.length; i++) {
-    if (catsCombined[i] >= 2) {
-      console.log(`Кошка № ${i + 1} взрослая, ей ${catsCombined[i]} лет`);
-    } else {
-      console.log(`Кошка № ${i + 1} ещё котёнок`);
-    }
-  }
-}
+//   // Перебираем кошек и выводим информацию о каждой
+//   for (let i = 0; i < catsCombined.length; i++) {
+//     if (catsCombined[i] >= 2) {
+//       console.log(`Кошка № ${i + 1} взрослая, ей ${catsCombined[i]} лет`);
+//     } else {
+//       console.log(`Кошка № ${i + 1} ещё котёнок`);
+//     }
+//   }
+// }
 
-// Тестовые данные
-let catsJane1 = [4, 5, 3, 11, 6, 2, 4, 1, 5, 9];
-let catsJulia1 = [2, 4, 5, 1, 13, 2, 15, 8, 3, 7];
+// // Тестовые данные
+// let catsJane1 = [4, 5, 3, 11, 6, 2, 4, 1, 5, 9];
+// let catsJulia1 = [2, 4, 5, 1, 13, 2, 15, 8, 3, 7];
 
-let catsJane2 = [3, 5, 9, 14, 1, 2, 6, 8, 3, 10];
-let catsJulia2 = [8, 2, 10, 1, 2, 5, 6, 3, 1, 4];
+// let catsJane2 = [3, 5, 9, 14, 1, 2, 6, 8, 3, 10];
+// let catsJulia2 = [8, 2, 10, 1, 2, 5, 6, 3, 1, 4];
 
-// Вызов функции для обоих наборов тестовых данных
-verifyCats(catsJane1, catsJulia1);
-console.log("====================================");
-verifyCats(catsJane2, catsJulia2);
+// // Вызов функции для обоих наборов тестовых данных
+// verifyCats(catsJane1, catsJulia1);
+// console.log("====================================");
+// verifyCats(catsJane2, catsJulia2);
