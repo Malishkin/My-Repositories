@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 // const currencies = new Map([
 //   ['USD', 'United States dollar'],
@@ -651,70 +651,102 @@
 // 7. Создайте массив, содержащий кошек, которые едят нормальное количество еды (попробуйте повторно использовать условие, используемое в пункте 6).
 // 8. Создайте мелкую (shallow) копию массива cats и отсортируйте по свойству рекомендуемая порция еды по возрастанию (имейте в виду, что порции находятся внутри объектов массива).
 
-const cats = [
-  { catWeight: 3, foodWeight: 25, owners: ['Наташа'] },
-  { catWeight: 6, foodWeight: 90, owners: ['Марина', 'Алиса'] },
-  { catWeight: 4, foodWeight: 45, owners: ['Алекс', 'Ирина'] },
-  { catWeight: 7, foodWeight: 80, owners: ['Борис'] },
-];
+// const cats = [
+//   { catWeight: 3, foodWeight: 25, owners: ['Наташа'] },
+//   { catWeight: 6, foodWeight: 90, owners: ['Марина', 'Алиса'] },
+//   { catWeight: 4, foodWeight: 45, owners: ['Алекс', 'Ирина'] },
+//   { catWeight: 7, foodWeight: 80, owners: ['Борис'] },
+// ];
 
-// 1
-cats.forEach(cat => (cat.recommendedPortion = cat.catWeight * 0.75 * 12));
+// // 1
+// cats.forEach(cat => (cat.recommendedPortion = cat.catWeight * 0.75 * 12));
 
-console.log(cats);
+// console.log(cats);
 
-// 2
-const alexCat = cats.find(cat => cat.owners.includes('Алекс'));
-console.log(alexCat);
-console.log(
-  `Эта кошка ест слишком ${
-    alexCat.foodWeight > alexCat.recommendedPortion ? 'много' : 'мало'
-  }.`
-);
+// // 2
+// const alexCat = cats.find(cat => cat.owners.includes('Алекс'));
+// console.log(alexCat);
+// console.log(
+//   `Эта кошка ест слишком ${
+//     alexCat.foodWeight > alexCat.recommendedPortion ? 'много' : 'мало'
+//   }.`
+// );
 
-// 3
+// // 3
 
-const catsEatTooMuchOwners = cats
-  .filter(cat => cat.foodWeight > cat.recommendedPortion)
-  .flatMap(cat => cat.owners);
-console.log(catsEatTooMuchOwners);
+// const catsEatTooMuchOwners = cats
+//   .filter(cat => cat.foodWeight > cat.recommendedPortion)
+//   .flatMap(cat => cat.owners);
+// console.log(catsEatTooMuchOwners);
 
-const catsEatTooLittleOwners = cats
-  .filter(cat => cat.foodWeight < cat.recommendedPortion)
-  .flatMap(cat => cat.owners);
-console.log(catsEatTooLittleOwners);
+// const catsEatTooLittleOwners = cats
+//   .filter(cat => cat.foodWeight < cat.recommendedPortion)
+//   .flatMap(cat => cat.owners);
+// console.log(catsEatTooLittleOwners);
 
-// 4
-// "Марина, Алиса, Борис - хозяева кошек, которые едят слишком много!" и "Наташа, Ирина, Алекс  - хозяева кошек, которые едят слишком мало!"
+// // 4
+// // "Марина, Алиса, Борис - хозяева кошек, которые едят слишком много!" и "Наташа, Ирина, Алекс  - хозяева кошек, которые едят слишком мало!"
 
-console.log(
-  `${catsEatTooMuchOwners.join(
-    ', '
-  )} - хозяева кошек, которые едят слишком много!`
-);
-console.log(
-  `${catsEatTooLittleOwners.join(
-    ', '
-  )} - хозяева кошек, которые едят слишком мало!`
-);
+// console.log(
+//   `${catsEatTooMuchOwners.join(
+//     ', '
+//   )} - хозяева кошек, которые едят слишком много!`
+// );
+// console.log(
+//   `${catsEatTooLittleOwners.join(
+//     ', '
+//   )} - хозяева кошек, которые едят слишком мало!`
+// );
 
-// 5
-console.log(cats.some(cat => cat.foodWeight === cat.recommendedPortion));
+// // 5
+// console.log(cats.some(cat => cat.foodWeight === cat.recommendedPortion));
 
-// 6
+// // 6
 
-const isFoodWeightNormal = cat =>
-  cat.foodWeight > cat.recommendedPortion * 0.9 &&
-  cat.foodWeight < cat.recommendedPortion * 1.1;
+// const isFoodWeightNormal = cat =>
+//   cat.foodWeight > cat.recommendedPortion * 0.9 &&
+//   cat.foodWeight < cat.recommendedPortion * 1.1;
 
-console.log(cats.some(isFoodWeightNormal));
+// console.log(cats.some(isFoodWeightNormal));
 
-// 7
-console.log(cats.filter(isFoodWeightNormal));
+// // 7
+// console.log(cats.filter(isFoodWeightNormal));
 
-// 8
-const cats1 = cats
-  .slice()
-  .sort((x, y) => x.recommendedPortion - y.recommendedPortion);
+// // 8
+// const cats1 = cats
+//   .slice()
+//   .sort((x, y) => x.recommendedPortion - y.recommendedPortion);
 
-console.log(cats1);
+// console.log(cats1);
+
+function verifyCats(catsJane, catsJulia) {
+  // Создаем неглубокую копию массива catsJane и удаляем с него первый и последний элементы
+  let catsJaneCorrected = catsJane.slice();
+  console.log("catsJaneCorrected: ", catsJaneCorrected);
+  catsJaneCorrected.shift();
+  catsJaneCorrected.pop();
+  console.log("catsJaneCorrected after shift and pop: ", catsJaneCorrected);
+
+  // Создаем массив с данными Жени (исправленными) и Юли
+  let catsCombined = catsJaneCorrected.concat(catsJulia);
+
+  // Перебираем кошек и выводим информацию о каждой
+  for (let i = 0; i < catsCombined.length; i++) {
+    if (catsCombined[i] >= 2) {
+      console.log(`Кошка № ${i + 1} взрослая, ей ${catsCombined[i]} лет`);
+    } else {
+      console.log(`Кошка № ${i + 1} ещё котёнок`);
+    }
+  }
+}
+
+// Тестовые данные
+let catsJane1 = [4, 5, 3, 11, 6, 2, 4, 1, 5, 9];
+let catsJulia1 = [2, 4, 5, 1, 13, 2, 15, 8, 3, 7];
+console.log("====================================");
+let catsJane2 = [3, 5, 9, 14, 1, 2, 6, 8, 3, 10];
+let catsJulia2 = [8, 2, 10, 1, 2, 5, 6, 3, 1, 4];
+
+// Вызов функции для обоих наборов тестовых данных
+verifyCats(catsJane1, catsJulia1);
+verifyCats(catsJane2, catsJulia2);
