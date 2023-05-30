@@ -85,3 +85,33 @@ function displayTransactions(transactions) {
 displayTransactions(account1.transactions);
 
 // console.log(containerTransactions.innerHTML);
+
+const userName = "Oliver Avila"; //nickname = 'oa'
+const nickName1 = userName
+  .toLowerCase()
+  .split(" ")
+  .map(function (word) {
+    return word[0];
+  })
+  .join("");
+
+const nickName = userName
+  .toLowerCase()
+  .split(" ")
+  .map((word) => word[0])
+  .join("");
+
+console.log(nickName1, nickName);
+
+function createNickName(accounts) {
+  accounts.forEach(function (account) {
+    account.nickName = account.userName
+      .toLowerCase()
+      .split(" ")
+      .map((word) => word[0])
+      .join("");
+  });
+}
+
+createNickName(accounts);
+console.log(accounts);
