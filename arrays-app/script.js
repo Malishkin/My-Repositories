@@ -743,10 +743,11 @@ function verifyCats(catsJane, catsJulia) {
 // Тестовые данные
 let catsJane1 = [4, 5, 3, 11, 6, 2, 4, 1, 5, 9];
 let catsJulia1 = [2, 4, 5, 1, 13, 2, 15, 8, 3, 7];
-console.log("====================================");
+
 let catsJane2 = [3, 5, 9, 14, 1, 2, 6, 8, 3, 10];
 let catsJulia2 = [8, 2, 10, 1, 2, 5, 6, 3, 1, 4];
 
 // Вызов функции для обоих наборов тестовых данных
 verifyCats(catsJane1, catsJulia1);
+console.log("====================================");
 verifyCats(catsJane2, catsJulia2);
