@@ -767,12 +767,24 @@ const transactionsEuro3 = transactions.map(
   (transaction) => transaction * usdToEuro
 );
 
-const transAll = transactions.map((transaction, index, array) => {
-  if (transaction > 0) {
-    return `Transaction N ${index + 1}: ${transaction} was deposited`;
-  } else {
-    return `Transaction N ${index + 1}: ${transaction} was withdrawn`;
-  }
-});
+// const transAll1 = transactions.map((transaction, index, array) => {
+//   let description = "";
+//   if (transaction > 0) {
+//     description = `Transaction N ${index + 1}: ${transaction} was deposited`;
+//   } else {
+//     description = `Transaction N ${index + 1}: ${transaction} was withdrawn`;
+//   }
+//   return description;
+// });
+const transAll2 = transactions.map(
+  (transaction, index) =>
+    `Transaction N ${index + 1}: ${Math.abs(transaction)} was ${
+      transaction > 0 ? "deposited" : "withdrawn"
+    }`
+);
+// const transAll = transactions.map((transaction, index) => {
+//   let description = transaction > 0 ? "deposited" : "withdrawn";
+//   return `Transaction N ${index + 1}: ${Math.abs(transaction)} was ${description}`;
+// });
 
-console.log(transAll);
+console.log(transAll2);
