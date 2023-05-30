@@ -118,8 +118,10 @@ function createNickName(accounts) {
 
 const transactions = [500, 250, -300, 5000, -850, -110, -170, 1100];
 
-const withDrawls = transactions.filter(function (trans) {
-  return trans < 0;
-});
+// const withDrawls = transactions.filter(function (trans) {
+//   return trans < 0;
+// });
 
-console.log(withDrawls);
+// const deposits = transactions.filter((trans) => trans > 0);
+
+
