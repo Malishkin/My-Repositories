@@ -113,5 +113,10 @@ function createNickName(accounts) {
   });
 }
 
-createNickName(accounts);
-console.log(accounts);
+// createNickName(accounts);
+// console.log(accounts);
+
+const filteredTrans = account1.transactions
+  .filter((x) => x > 0)
+  .reduce((acc, cur) => acc + cur, 0);
+console.log(filteredTrans);
