@@ -153,4 +153,4 @@ const maxValue = transactions.reduce(
   transactions[0]
 );
 
-console.log(minValue, maxValue);
+// console.log(minValue, maxValue);
