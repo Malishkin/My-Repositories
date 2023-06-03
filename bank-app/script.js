@@ -86,32 +86,43 @@ function displayTransactions(transactions) {
 
 // console.log(containerTransactions.innerHTML);
 
-const userName = "Oliver Avila"; //nickname = 'oa'
-const nickName1 = userName
-  .toLowerCase()
-  .split(" ")
-  .map(function (word) {
-    return word[0];
-  })
-  .join("");
-
-const nickName = userName
-  .toLowerCase()
-  .split(" ")
-  .map((word) => word[0])
-  .join("");
-
-// console.log(nickName1, nickName);
-
-function createNickName(accounts) {
-  accounts.forEach(function (account) {
-    account.nickName = account.userName
+// const userName = "Oliver Avila"; //nickname = 'oa'
+// const nickName1 = userName
+//   .toLowerCase()
+//   .split(" ")
+//   .map(function (word) {
+//     return word[0];
+//   })
+//   .join("");
+const createNicknames = function (accs) {
+  accs.forEach(function (acc) {
+    acc.nickname = acc.userName
       .toLowerCase()
       .split(" ")
       .map((word) => word[0])
       .join("");
   });
-}
+};
+
+createNicknames(accounts);
+
+// const nickName = userName
+//   .toLowerCase()
+//   .split(" ")
+//   .map((word) => word[0])
+//   .join("");
+
+// console.log(nickName1, nickName);
+
+// function createNickName(accounts) {
+//   accounts.forEach(function (account) {
+//     account.nickName = account.userName
+//       .toLowerCase()
+//       .split(" ")
+//       .map((word) => word[0])
+//       .join("");
+//   });
+// }
 
 // createNickName(accounts);
 // console.log(accounts);
@@ -185,22 +196,30 @@ const displayTotal = function (transactions) {
 
 // displayTotal(account1.transactions);
 
+let currentAccount;
+
 btnLogin.addEventListener("click", function (e) {
   e.preventDefault();
-  const userName = inputLoginUsername.value;
-  const pin = Number(inputLoginPin.value);
-  const account = accounts.find((account) => account.userName === userName);
-  if (account?.pin === pin) {
+  currentAccount = accounts.find(
+    (account) => account.nickname === inputLoginUsername.value
+  );
+  console.log(currentAccount);
+  if (currentAccount?.pin === Number(inputLoginPin.value)) {
+    //Display UI and welcome message
     labelWelcome.textContent = `Welcome back, ${
-      account.userName.split(" ")[0]
+      currentAccount.userName.split(" ")[0]
     }`;
     containerApp.style.opacity = 100;
-    inputLoginUsername.value = inputLoginPin.value = "";
-    inputLoginPin.blur();
-    displayTransactions(account.transactions);
-    displayBalance(account.transactions);
-    displayTotal(account.transactions);
+
+    //Display transactions
+    displayTransactions(currentAccount.transactions);
+
+    //Display balance
+    displayBalance(currentAccount.transactions);
+
+    //Display total
+    displayTotal(currentAccount.transactions);
   } else {
-    alert("Invalid username or password");
+    alert("Wrong username or password");
   }
 });
