@@ -208,7 +208,7 @@ btnLogin.addEventListener("click", function (e) {
     //Display UI and welcome message
     labelWelcome.textContent = `Welcome back, ${
       currentAccount.userName.split(" ")[0]
-    }`;
+    }!`;
     containerApp.style.opacity = 100;
 
     //Display transactions
