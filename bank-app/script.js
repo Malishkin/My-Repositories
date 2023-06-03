@@ -82,7 +82,7 @@ function displayTransactions(transactions) {
   });
 }
 
-displayTransactions(account1.transactions);
+// displayTransactions(account1.transactions);
 
 // console.log(containerTransactions.innerHTML);
 
@@ -159,7 +159,7 @@ const displayBalance = function (transactions) {
   labelBalance.textContent = `${balance}$`;
 };
 
-displayBalance(account1.transactions);
+// displayBalance(account1.transactions);
 
 const displayTotal = function (transactions) {
   const depositTotal = transactions
@@ -183,4 +183,24 @@ const displayTotal = function (transactions) {
   labelSumInterest.textContent = `${interestTotal}$`;
 };
 
-displayTotal(account1.transactions);
+// displayTotal(account1.transactions);
+
+btnLogin.addEventListener("click", function (e) {
+  e.preventDefault();
+  const userName = inputLoginUsername.value;
+  const pin = Number(inputLoginPin.value);
+  const account = accounts.find((account) => account.userName === userName);
+  if (account?.pin === pin) {
+    labelWelcome.textContent = `Welcome back, ${
+      account.userName.split(" ")[0]
+    }`;
+    containerApp.style.opacity = 100;
+    inputLoginUsername.value = inputLoginPin.value = "";
+    inputLoginPin.blur();
+    displayTransactions(account.transactions);
+    displayBalance(account.transactions);
+    displayTotal(account.transactions);
+  } else {
+    alert("Invalid username or password");
+  }
+});
