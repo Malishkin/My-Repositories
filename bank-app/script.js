@@ -203,7 +203,7 @@ btnLogin.addEventListener("click", function (e) {
   currentAccount = accounts.find(
     (account) => account.nickname === inputLoginUsername.value
   );
-  console.log(currentAccount);
+
   if (currentAccount?.pin === Number(inputLoginPin.value)) {
     //Display UI and welcome message
     labelWelcome.textContent = `Welcome back, ${
@@ -227,4 +227,14 @@ btnLogin.addEventListener("click", function (e) {
   } else {
     alert("Wrong username or password");
   }
+});
+
+btnTransfer.addEventListener("click", function (e) {
+  e.preventDefault();
+  const transferAmount = Number(inputTransferAmount.value);
+  const recipientNickName = inputTransferTo.value;
+  const recipientAccount = accounts.find(function (account) {
+    return account.nickname === recipientNickName;
+  });
+  console.log(transferAmount, recipientNickName, recipientAccount);
 });
