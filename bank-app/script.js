@@ -236,5 +236,25 @@ btnTransfer.addEventListener("click", function (e) {
   const recipientAccount = accounts.find(function (account) {
     return account.nickname === recipientNickName;
   });
-  console.log(transferAmount, recipientNickName, recipientAccount);
+
+  if (
+    transferAmount > 0 &&
+    recipientAccount &&
+    currentAccount.balance >= transferAmount &&
+    recipientAccount.nickname !== currentAccount.nickname
+  ) {
+    //Doing the transfer
+    currentAccount.transactions.push(-transferAmount);
+    recipientAccount.transactions.push(transferAmount);
+
+    //Update UI
+    displayTransactions(currentAccount.transactions);
+    displayBalance(currentAccount.transactions);
+    displayTotal(currentAccount);
+
+    //Clear input fields
+    inputTransferAmount.value = inputTransferTo.value = "";
+  } else {
+    alert("Invalid transfer");
+  }
 });
