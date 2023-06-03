@@ -172,20 +172,20 @@ const displayBalance = function (transactions) {
 
 // displayBalance(account1.transactions);
 
-const displayTotal = function (transactions) {
-  const depositTotal = transactions
+const displayTotal = function (account) {
+  const depositTotal = account.transactions
     .filter((transaction) => transaction > 0)
     .reduce((x, y) => x + y, 0);
   labelSumIn.textContent = `${depositTotal}$`;
 
-  const withdrawTotal = transactions
+  const withdrawTotal = account.transactions
     .filter((transaction) => transaction < 0)
     .reduce((x, y) => x + y, 0);
   labelSumOut.textContent = `${withdrawTotal}$`;
 
-  const interestTotal = transactions
+  const interestTotal = account.transactions
     .filter((transaction) => transaction > 0)
-    .map((deposit) => (deposit * account1.interest) / 100)
+    .map((deposit) => (deposit * account.interest) / 100)
     .filter((interest, index, array) => {
       console.log(array);
       return interest >= 5;
@@ -211,6 +211,11 @@ btnLogin.addEventListener("click", function (e) {
     }!`;
     containerApp.style.opacity = 100;
 
+    //Clear input fields
+    inputLoginUsername.value = inputLoginPin.value = "";
+    inputLoginPin.value = "";
+    inputLoginPin.blur();
+
     //Display transactions
     displayTransactions(currentAccount.transactions);
 
@@ -218,7 +223,7 @@ btnLogin.addEventListener("click", function (e) {
     displayBalance(currentAccount.transactions);
 
     //Display total
-    displayTotal(currentAccount.transactions);
+    displayTotal(currentAccount);
   } else {
     alert("Wrong username or password");
   }
