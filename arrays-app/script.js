@@ -884,4 +884,97 @@ const coreyMartinezAccount = accounts.find(
   (account) => account.userName === "Corey Martinez"
 );
 
-console.log(coreyMartinezAccount);
+// console.log(coreyMartinezAccount);
+
+//Example 5 work with arrays in javascript => Work with array in Javascript
+
+const textToTitleCase = (text) => {
+  const exeptions = ["a", "an", "the", "but", "or", "on", "in", "with", "and"];
+  const words = text.toLowerCase().split(" ");
+  const titleCaseWords = words.map((word, index) => {
+    if (index === 0 || !exeptions.includes(word)) {
+      return word[0].toUpperCase() + word.slice(1);
+    }
+    return word;
+  });
+  return titleCaseWords.join(" ");
+};
+
+// console.log(textToTitleCase("a work with arrays in javascript"));
+
+const cats = [
+  { catWeight: 3, foodWeight: 25, owners: ["Наташа"] },
+  { catWeight: 6, foodWeight: 90, owners: ["Марина", "Алиса"] },
+  { catWeight: 4, foodWeight: 45, owners: ["Алекс", "Ирина"] },
+  { catWeight: 7, foodWeight: 80, owners: ["Борис"] },
+];
+
+// 1. Вычислить рекомендуемую порцию еды
+cats.forEach((cat) => {
+  cat.recommendedFood = cat.catWeight * 0.75 * 12;
+});
+
+// 2. Найти кошку, имя хозяина которой Алекс
+const catOwnedByAlex = cats.find((cat) => cat.owners.includes("Алекс"));
+
+if (catOwnedByAlex.foodWeight > catOwnedByAlex.recommendedFood * 1.1) {
+  console.log("Кошка Алекса ест слишком много");
+} else if (catOwnedByAlex.foodWeight < catOwnedByAlex.recommendedFood * 0.9) {
+  console.log("Кошка Алекса ест слишком мало");
+} else {
+  console.log("Кошка Алекса ест нормальное количество еды");
+}
+
+// 3. Создать массивы с владельцами кошек, которые едят слишком много или слишком мало
+const catsEatTooMuch = cats.filter(
+  (cat) => cat.foodWeight > cat.recommendedFood * 1.1
+);
+const catsEatTooLittle = cats.filter(
+  (cat) => cat.foodWeight < cat.recommendedFood * 0.9
+);
+
+const catsEatTooMuchOwners = catsEatTooMuch.flatMap((cat) => cat.owners);
+const catsEatTooLittleOwners = catsEatTooLittle.flatMap((cat) => cat.owners);
+
+console.log(
+  `${catsEatTooMuchOwners.join(
+    ", "
+  )} - хозяева кошек, которые едят слишком много!`
+);
+console.log(
+  `${catsEatTooLittleOwners.join(
+    ", "
+  )} - хозяева кошек, которые едят слишком мало!`
+);
+
+// 5. Проверить, ест ли хоть одна кошка в точном соответствии с рекомендуемым количеством еды
+const isExactFoodEater = cats.some(
+  (cat) => cat.foodWeight === cat.recommendedFood
+);
+console.log(isExactFoodEater);
+
+// 6. Проверить, ест ли хоть одна кошка нормальное количество еды
+const isNormalFoodEater = cats.some(
+  (cat) =>
+    cat.foodWeight > cat.recommendedFood * 0.9 &&
+    cat.foodWeight < cat.recommendedFood * 1.1
+);
+console.log(isNormalFoodEater);
+
+// 7. Создать массив, содержащий кошек, которые едят нормальное количество еды
+const catsEatingNormally = cats.filter(
+  (cat) =>
+    cat.foodWeight > cat.recommendedFood * 0.9 &&
+    cat.foodWeight < cat.recommendedFood * 1.1
+);
+console.log(`Cat eating normally: ${catsEatingNormally.length}`);
+
+// 8. Создать мелкую копию массива cats и отсортировать по свойству recommendedFood
+// const sortedCats = [...cats].sort(
+//   (a, b) => a.recommendedFood - b.recommendedFood
+// );
+
+const cats1 = cats
+  .slice()
+  .sort((a, b) => a.recommendedFood - b.recommendedFood);
+console.log("Cats1: ", cats1);
