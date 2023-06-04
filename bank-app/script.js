@@ -165,12 +165,13 @@ createNicknames(accounts);
 // );
 
 // console.log(minValue, maxValue);
-const displayBalance = function (transactions) {
-  const balance = transactions.reduce((x, y) => x + y, 0);
+const displayBalance = function (account) {
+  const balance = account.transactions.reduce((x, y) => x + y, 0);
+  account.balance = balance;
   labelBalance.textContent = `${balance}$`;
 };
 
-// displayBalance(account1.transactions);
+// displayBalance(account);
 
 const displayTotal = function (account) {
   const depositTotal = account.transactions
@@ -187,7 +188,7 @@ const displayTotal = function (account) {
     .filter((transaction) => transaction > 0)
     .map((deposit) => (deposit * account.interest) / 100)
     .filter((interest, index, array) => {
-      console.log(array);
+      // console.log(array);
       return interest >= 5;
     })
     .reduce((x, y) => x + y, 0);
@@ -197,6 +198,12 @@ const displayTotal = function (account) {
 // displayTotal(account1.transactions);
 
 let currentAccount;
+
+function updateUI(account) {
+  displayTransactions(account.transactions);
+  displayBalance(account);
+  displayTotal(account);
+}
 
 btnLogin.addEventListener("click", function (e) {
   e.preventDefault();
@@ -215,15 +222,7 @@ btnLogin.addEventListener("click", function (e) {
     inputLoginUsername.value = inputLoginPin.value = "";
     inputLoginPin.value = "";
     inputLoginPin.blur();
-
-    //Display transactions
-    displayTransactions(currentAccount.transactions);
-
-    //Display balance
-    displayBalance(currentAccount.transactions);
-
-    //Display total
-    displayTotal(currentAccount);
+    updateUI(currentAccount);
   } else {
     alert("Wrong username or password");
   }
@@ -236,25 +235,58 @@ btnTransfer.addEventListener("click", function (e) {
   const recipientAccount = accounts.find(function (account) {
     return account.nickname === recipientNickName;
   });
-
+  inputTransferAmount.value = inputTransferTo.value = "";
   if (
     transferAmount > 0 &&
-    recipientAccount &&
     currentAccount.balance >= transferAmount &&
-    recipientAccount.nickname !== currentAccount.nickname
+    recipientAccount &&
+    currentAccount.nickname !== recipientAccount.nickname
   ) {
     //Doing the transfer
     currentAccount.transactions.push(-transferAmount);
     recipientAccount.transactions.push(transferAmount);
 
     //Update UI
-    displayTransactions(currentAccount.transactions);
-    displayBalance(currentAccount.transactions);
-    displayTotal(currentAccount);
-
-    //Clear input fields
-    inputTransferAmount.value = inputTransferTo.value = "";
+    updateUI(currentAccount);
   } else {
     alert("Invalid transfer");
   }
+});
+
+btnClose.addEventListener("click", function (e) {
+  e.preventDefault();
+  if (
+    inputCloseUsername.value === currentAccount.nickname &&
+    Number(inputClosePin.value) === currentAccount.pin
+  ) {
+    const index = accounts.findIndex(
+      (account) => account.nickname === currentAccount.nickname
+    );
+    //Delete account
+    accounts.splice(index, 1);
+    //Hide UI
+    containerApp.style.opacity = 0;
+    labelWelcome.textContent = "Log in to get started";
+  } else {
+    alert("Invalid username or pin");
+  }
+  inputCloseUsername.value = inputClosePin.value = "";
+});
+
+btnLoan.addEventListener("click", function (e) {
+  e.preventDefault();
+  const loanAmount = Number(inputLoanAmount.value);
+  if (
+    loanAmount > 0 &&
+    currentAccount.transactions.some((x) => x >= (loanAmount * 10) / 100)
+  ) {
+    //Add loan to current account
+    currentAccount.transactions.push(loanAmount);
+
+    //Update UI
+    updateUI(currentAccount);
+  } else {
+    alert("Invalid loan");
+  }
+  inputLoanAmount.value = "";
 });
