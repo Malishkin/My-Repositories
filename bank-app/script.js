@@ -70,9 +70,6 @@ const account4 = {
     "2020-11-15T10:45:23.907Z",
     "2021-01-22T12:17:46.255Z",
     "2021-02-12T15:14:06.486Z",
-    "2021-03-09T11:42:26.371Z",
-    "2021-05-21T07:43:59.331Z",
-    "2021-06-22T15:21:20.814Z",
   ],
   currency: "EUR",
   locale: "fr-CA",
@@ -89,9 +86,6 @@ const account5 = {
     "2020-11-15T10:45:23.907Z",
     "2021-01-22T12:17:46.255Z",
     "2021-02-12T15:14:06.486Z",
-    "2021-03-09T11:42:26.371Z",
-    "2021-05-21T07:43:59.331Z",
-    "2021-06-22T15:21:20.814Z",
   ],
   currency: "USD",
   locale: "en-US",
@@ -132,11 +126,20 @@ function displayTransactions(account, sort = false) {
     : account.transactions;
   transacs.forEach(function (trans, index) {
     const transType = trans > 0 ? "deposit" : "withdrawal";
+
+    const date = new Date(account.transactionsDates[index]);
+
+    const day = `${date.getDate()}`.padStart(2, 0);
+    const month = `${date.getMonth() + 1}`.padStart(2, 0);
+    const year = date.getFullYear();
+    const transDate = `${day}/${month}/${year}`;
+    // const transDate = new Intl.DateTimeFormat(account.locale, {}).format(date);
     const transactionRow = `
    <div class="transactions__row">
    <div class="transactions__type transactions__type--${transType}">
      ${index + 1} ${transType}
    </div>
+   <div class="transactions__date">${transDate}</div>
   
    <div class="transactions__value">${trans.toFixed(2)}</div>
  </div>
@@ -267,12 +270,6 @@ currentAccount = account1;
 updateUI(currentAccount);
 containerApp.style.opacity = 100;
 
-const now = new Date();
-const month = `${now.getMonth() + 1}`.padStart(2, 0);
-const day = `${now.getDate()}`.padStart(2, 0);
-const year = now.getFullYear();
-labelDate.textContent = `${month}/${day}/${year}`;
-
 // labelDate.textContent = new Intl.DateTimeFormat("en-US", {}).format(now);
 
 function updateUI(account) {
@@ -293,6 +290,12 @@ btnLogin.addEventListener("click", function (e) {
       currentAccount.userName.split(" ")[0]
     }!`;
     containerApp.style.opacity = 100;
+
+    const now = new Date();
+    const month = `${now.getMonth() + 1}`.padStart(2, 0);
+    const day = `${now.getDate()}`.padStart(2, 0);
+    const year = now.getFullYear();
+    labelDate.textContent = `${day}/${month}/${year}`;
 
     //Clear input fields
     inputLoginUsername.value = inputLoginPin.value = "";
@@ -321,6 +324,10 @@ btnTransfer.addEventListener("click", function (e) {
     //Doing the transfer
     currentAccount.transactions.push(-transferAmount);
     recipientAccount.transactions.push(transferAmount);
+
+    //Add Date
+    currentAccount.transactionsDates.push(new Date().toISOString());
+    recipientAccount.transactionsDates.push(new Date().toISOString());
 
     //Update UI
     updateUI(currentAccount);
@@ -358,6 +365,9 @@ btnLoan.addEventListener("click", function (e) {
   ) {
     //Add loan to current account
     currentAccount.transactions.push(loanAmount);
+
+    //Add Date
+    currentAccount.transactionsDates.push(new Date().toISOString());
 
     //Update UI
     updateUI(currentAccount);
