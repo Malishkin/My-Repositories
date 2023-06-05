@@ -224,7 +224,7 @@ const displayTotal = function (account) {
   );
 };
 
-let currentAccount;
+let currentAccount, currentLogoutTimer;
 
 //Always logged in
 // currentAccount = account1;
@@ -251,7 +251,7 @@ const startLogOutTimer = function () {
     const sec = String(time % 60).padStart(2, 0);
     labelTimer.textContent = `${min}:${sec}`;
     if (time === 0) {
-      clearInterval(timer);
+      clearInterval(logOutTimer);
       labelWelcome.textContent = "Войдите в свой аккаунт";
       containerApp.style.opacity = 0;
     }
@@ -259,8 +259,8 @@ const startLogOutTimer = function () {
   };
   let time = 300;
   tick();
-  const timer = setInterval(tick, 1000);
-  return timer;
+  const logOutTimer = setInterval(tick, 1000);
+  return logOutTimer;
 };
 
 function updateUI(account) {
@@ -301,7 +301,12 @@ btnLogin.addEventListener("click", function (e) {
     inputLoginUsername.value = inputLoginPin.value = "";
     inputLoginPin.value = "";
     inputLoginPin.blur();
-    startLogOutTimer();
+
+    //Check if timer exists
+    if (currentLogoutTimer) clearInterval(currentLogoutTimer);
+    //Start timer
+    currentLogoutTimer = startLogOutTimer();
+
     updateUI(currentAccount);
   } else {
     alert("Wrong username or password");
@@ -332,6 +337,10 @@ btnTransfer.addEventListener("click", function (e) {
 
     //Update UI
     updateUI(currentAccount);
+
+    //Reset timer
+    clearInterval(currentLogoutTimer);
+    currentLogoutTimer = startLogOutTimer();
   } else {
     alert("Invalid transfer");
   }
@@ -368,11 +377,14 @@ btnLoan.addEventListener("click", function (e) {
       currentAccount.transactions.push(loanAmount);
       currentAccount.transactionsDates.push(new Date().toISOString());
       updateUI(currentAccount);
-    }, 3000);
+    }, 5000);
   else {
     alert("Invalid loan");
   }
   inputLoanAmount.value = "";
+  //Reset timer
+  clearInterval(currentLogoutTimer);
+  currentLogoutTimer = startLogOutTimer();
 });
 
 let sortedTransactions = false;
