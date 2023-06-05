@@ -125,11 +125,11 @@ const inputLoanAmount = document.querySelector(".form__input--loan-amount");
 const inputCloseUsername = document.querySelector(".form__input--user");
 const inputClosePin = document.querySelector(".form__input--pin");
 
-function displayTransactions(transactions, sort = false) {
+function displayTransactions(account, sort = false) {
   containerTransactions.innerHTML = "";
   const transacs = sort
-    ? transactions.slice().sort((a, b) => a - b)
-    : transactions;
+    ? account.transactions.slice().sort((a, b) => a - b)
+    : account.transactions;
   transacs.forEach(function (trans, index) {
     const transType = trans > 0 ? "deposit" : "withdrawal";
     const transactionRow = `
@@ -268,10 +268,15 @@ updateUI(currentAccount);
 containerApp.style.opacity = 100;
 
 const now = new Date();
-labelDate.textContent = new Intl.DateTimeFormat("en-US", {}).format(now);
+const month = `${now.getMonth() + 1}`.padStart(2, 0);
+const day = `${now.getDate()}`.padStart(2, 0);
+const year = now.getFullYear();
+labelDate.textContent = `${month}/${day}/${year}`;
+
+// labelDate.textContent = new Intl.DateTimeFormat("en-US", {}).format(now);
 
 function updateUI(account) {
-  displayTransactions(account.transactions);
+  displayTransactions(account);
   displayBalance(account);
   displayTotal(account);
 }
@@ -366,7 +371,7 @@ let sortedTransactions = false;
 
 btnSort.addEventListener("click", function (e) {
   e.preventDefault();
-  displayTransactions(currentAccount.transactions, !sortedTransactions);
+  displayTransactions(currentAccount, !sortedTransactions);
   sortedTransactions = !sortedTransactions;
 });
 
