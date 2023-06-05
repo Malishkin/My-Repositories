@@ -304,60 +304,70 @@ btnSort.addEventListener("click", function (e) {
 
 //Array.from example
 
+// const logoImage = document.querySelector(".logo");
+// logoImage.addEventListener("click", function (e) {
+//   e.preventDefault();
+//   const transactionsUI = document.querySelectorAll(".transactions__value");
+//   console.log(transactionsUI);
+//   // const transactionsUIArray = Array.from(transactionsUI);
+//   // console.log(transactionsUIArray.map((x) => x.textContent));
+//   const transactionsUIArray = Array.from(transactionsUI, (x) => +x.textContent);
+//   console.log(transactionsUIArray);
+// });
+
+//Flat and flatMap Ex 1
+// const bankDepositSum = accounts
+//   .flatMap((account) => account.transactions)
+//   .filter((x) => x > 0)
+//   .reduce((x, y) => x + y);
+// console.log("Bank deposit Sum: ", bankDepositSum);
+
+//Ex 2
+// const withdrawalsOver500 = accounts
+//   .flatMap((account) => account.transactions)
+//   .filter((x) => x < 0)
+//   .filter((x) => x <= -500);
+// console.log("Withdrawals over 500: ", withdrawalsOver500);
+
+//Ex 3
+// const withdrawalsOver300 = accounts
+//   .flatMap((account) => account.transactions)
+//   .reduce(
+//     (counter, transaction) => (transaction <= -300 ? counter + 1 : counter),
+//     0
+//   );
+// console.log("Withdrawals over 300: ", withdrawalsOver300);
+
+//Ex 4
+// const { depositsTotal, withdrawalsTotal } = accounts
+//   .flatMap((account) => account.transactions)
+//   .reduce(
+//     (acc, trans) => {
+//       // trans > 0
+//       //   ? (acc.depositsTotal += trans)
+//       //   : (acc.withdrawalsTotal += trans);
+//       acc[trans > 0 ? "depositsTotal" : "withdrawalsTotal"] += trans;
+//       return acc;
+//     },
+//     { depositsTotal: 0, withdrawalsTotal: 0 }
+//   );
+// console.log("Deposits total: ", depositsTotal);
+// console.log("Withdrawals total: ", withdrawalsTotal);
+// [...document.querySelectorAll(".transactions__row")].forEach(function (row, i) {
+//   if (i % 2 === 0) {
+//     row.style.backgroundColor = "gray";
+//   }
+// });
+
 const logoImage = document.querySelector(".logo");
 logoImage.addEventListener("click", function (e) {
   e.preventDefault();
-  const transactionsUI = document.querySelectorAll(".transactions__value");
-  console.log(transactionsUI);
-  // const transactionsUIArray = Array.from(transactionsUI);
-  // console.log(transactionsUIArray.map((x) => x.textContent));
-  const transactionsUIArray = Array.from(transactionsUI, (x) => +x.textContent);
-  console.log(transactionsUIArray);
-});
-
-//Flat and flatMap Ex 1
-const bankDepositSum = accounts
-  .flatMap((account) => account.transactions)
-  .filter((x) => x > 0)
-  .reduce((x, y) => x + y);
-console.log("Bank deposit Sum: ", bankDepositSum);
-
-//Ex 2
-const withdrawalsOver500 = accounts
-  .flatMap((account) => account.transactions)
-  .filter((x) => x < 0)
-  .filter((x) => x <= -500);
-console.log("Withdrawals over 500: ", withdrawalsOver500);
-
-//Ex 3
-const withdrawalsOver300 = accounts
-  .flatMap((account) => account.transactions)
-  .reduce(
-    (counter, transaction) => (transaction <= -300 ? counter + 1 : counter),
-    0
-  );
-console.log("Withdrawals over 300: ", withdrawalsOver300);
-
-//Ex 4
-const { depositsTotal, withdrawalsTotal } = accounts
-  .flatMap((account) => account.transactions)
-  .reduce(
-    (acc, trans) => {
-      // trans > 0
-      //   ? (acc.depositsTotal += trans)
-      //   : (acc.withdrawalsTotal += trans);
-      acc[trans > 0 ? "depositsTotal" : "withdrawalsTotal"] += trans;
-      return acc;
-    },
-    { depositsTotal: 0, withdrawalsTotal: 0 }
-  );
-// console.log("Deposits total: ", depositsTotal);
-// console.log("Withdrawals total: ", withdrawalsTotal);
-[...document.querySelectorAll(".transactions__row")].forEach(function (
-  row,
-  index
-) {
-  if (index % 2 === 0) {
-    row.style.backgroundColor = "gray";
-  }
+  [...document.querySelectorAll(".transactions__row")].forEach(function (
+    row,
+    i
+  ) {
+    if (i % 2 === 0) {
+      row.style.backgroundColor = "grey";
+    }
+  });
 });
