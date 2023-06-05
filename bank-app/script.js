@@ -8,14 +8,14 @@ const account1 = {
   interest: 1.5,
   pin: 1111,
   transactionsDates: [
-    "2020-10-02T14:43:31.074Z",
-    "2020-10-29T11:24:19.761Z",
-    "2020-11-15T10:45:23.907Z",
-    "2021-01-22T12:17:46.255Z",
-    "2021-02-12T15:14:06.486Z",
-    "2021-03-09T11:42:26.371Z",
-    "2021-05-21T07:43:59.331Z",
-    "2021-06-22T15:21:20.814Z",
+    "2022-10-02T14:43:31.074Z",
+    "2022-10-29T11:24:19.761Z",
+    "2022-11-15T10:45:23.907Z",
+    "2023-01-22T12:17:46.255Z",
+    "2023-02-12T15:14:06.486Z",
+    "2023-03-09T11:42:26.371Z",
+    "2023-05-31T07:43:59.331Z",
+    "2023-06-04T15:21:20.814Z",
   ],
   currency: "USD",
   locale: "en-US",
@@ -27,14 +27,14 @@ const account2 = {
   interest: 1.3,
   pin: 2222,
   transactionsDates: [
-    "2020-10-02T14:43:31.074Z",
-    "2020-10-29T11:24:19.761Z",
-    "2020-11-15T10:45:23.907Z",
-    "2021-01-22T12:17:46.255Z",
-    "2021-02-12T15:14:06.486Z",
-    "2021-03-09T11:42:26.371Z",
-    "2021-05-21T07:43:59.331Z",
-    "2021-06-22T15:21:20.814Z",
+    "2022-10-02T14:43:31.074Z",
+    "2022-10-29T11:24:19.761Z",
+    "2022-11-15T10:45:23.907Z",
+    "2023-01-22T12:17:46.255Z",
+    "2023-02-12T15:14:06.486Z",
+    "2023-03-09T11:42:26.371Z",
+    "2023-05-21T07:43:59.331Z",
+    "2023-06-04T15:21:20.814Z",
   ],
   currency: "UAH",
   locale: "uk-UA",
@@ -119,6 +119,22 @@ const inputLoanAmount = document.querySelector(".form__input--loan-amount");
 const inputCloseUsername = document.querySelector(".form__input--user");
 const inputClosePin = document.querySelector(".form__input--pin");
 
+const formatTransactionDate = function (date) {
+  const getDaysBetweenTwoDates = (date1, date2) =>
+    Math.round(Math.abs(date1 - date2) / (1000 * 60 * 60 * 24));
+  const daysPassed = getDaysBetweenTwoDates(new Date(), date);
+  console.log(daysPassed);
+  if (daysPassed === 0) return "Today";
+  if (daysPassed === 1) return "Yesterday";
+  if (daysPassed <= 7) return `${daysPassed} days ago`;
+  else {
+    const day = `${date.getDate()}`.padStart(2, 0);
+    const month = `${date.getMonth() + 1}`.padStart(2, 0);
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  }
+};
+
 function displayTransactions(account, sort = false) {
   containerTransactions.innerHTML = "";
   const transacs = sort
@@ -126,14 +142,9 @@ function displayTransactions(account, sort = false) {
     : account.transactions;
   transacs.forEach(function (trans, index) {
     const transType = trans > 0 ? "deposit" : "withdrawal";
-
     const date = new Date(account.transactionsDates[index]);
+    const transDate = formatTransactionDate(date);
 
-    const day = `${date.getDate()}`.padStart(2, 0);
-    const month = `${date.getMonth() + 1}`.padStart(2, 0);
-    const year = date.getFullYear();
-    const transDate = `${day}/${month}/${year}`;
-    // const transDate = new Intl.DateTimeFormat(account.locale, {}).format(date);
     const transactionRow = `
    <div class="transactions__row">
    <div class="transactions__type transactions__type--${transType}">
@@ -269,8 +280,22 @@ let currentAccount;
 currentAccount = account1;
 updateUI(currentAccount);
 containerApp.style.opacity = 100;
+//Display date
+// const now = new Date();
+// const month = `${now.getMonth() + 1}`.padStart(2, 0);
+// const day = `${now.getDate()}`.padStart(2, 0);
+// const year = now.getFullYear();
+// labelDate.textContent = `${day}/${month}/${year}`;
 
-// labelDate.textContent = new Intl.DateTimeFormat("en-US", {}).format(now);
+const now = new Date();
+const options = {
+  hour: "numeric",
+  minute: "numeric",
+  day: "numeric",
+  month: "numeric",
+  year: "numeric",
+};
+labelDate.textContent = new Intl.DateTimeFormat("en-GB", options).format(now);
 
 function updateUI(account) {
   displayTransactions(account);
@@ -290,7 +315,7 @@ btnLogin.addEventListener("click", function (e) {
       currentAccount.userName.split(" ")[0]
     }!`;
     containerApp.style.opacity = 100;
-
+    //Display date
     const now = new Date();
     const month = `${now.getMonth() + 1}`.padStart(2, 0);
     const day = `${now.getDate()}`.padStart(2, 0);
@@ -454,3 +479,5 @@ logoImage.addEventListener("click", function (e) {
     }
   });
 });
+
+console.log(accounts);
