@@ -292,10 +292,14 @@ const options = {
   hour: "numeric",
   minute: "numeric",
   day: "numeric",
-  month: "numeric",
+  month: "long",
   year: "numeric",
+  weekday: "long",
 };
-labelDate.textContent = new Intl.DateTimeFormat("en-GB", options).format(now);
+
+const locale = navigator.language;
+console.log(locale);
+labelDate.textContent = new Intl.DateTimeFormat("uk-UA", options).format(now);
 
 function updateUI(account) {
   displayTransactions(account);
@@ -316,11 +320,25 @@ btnLogin.addEventListener("click", function (e) {
     }!`;
     containerApp.style.opacity = 100;
     //Display date
+    // const now = new Date();
+    // const month = `${now.getMonth() + 1}`.padStart(2, 0);
+    // const day = `${now.getDate()}`.padStart(2, 0);
+    // const year = now.getFullYear();
+    // labelDate.textContent = `${day}/${month}/${year}`;
     const now = new Date();
-    const month = `${now.getMonth() + 1}`.padStart(2, 0);
-    const day = `${now.getDate()}`.padStart(2, 0);
-    const year = now.getFullYear();
-    labelDate.textContent = `${day}/${month}/${year}`;
+    const options = {
+      hour: "numeric",
+      minute: "numeric",
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+      weekday: "long",
+    };
+
+    labelDate.textContent = new Intl.DateTimeFormat(
+      currentAccount.locale,
+      options
+    ).format(now);
 
     //Clear input fields
     inputLoginUsername.value = inputLoginPin.value = "";
