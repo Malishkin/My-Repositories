@@ -227,23 +227,23 @@ const displayTotal = function (account) {
 let currentAccount;
 
 //Always logged in
-currentAccount = account1;
-updateUI(currentAccount);
-containerApp.style.opacity = 100;
+// currentAccount = account1;
+// updateUI(currentAccount);
+// containerApp.style.opacity = 100;
 
-const now = new Date();
-const options = {
-  hour: "numeric",
-  minute: "numeric",
-  day: "numeric",
-  month: "long",
-  year: "numeric",
-  weekday: "long",
-};
+// const now = new Date();
+// const options = {
+//   hour: "numeric",
+//   minute: "numeric",
+//   day: "numeric",
+//   month: "long",
+//   year: "numeric",
+//   weekday: "long",
+// };
 
-const locale = navigator.language;
-console.log(locale);
-labelDate.textContent = new Intl.DateTimeFormat("uk-UA", options).format(now);
+// const locale = navigator.language;
+// console.log(locale);
+// labelDate.textContent = new Intl.DateTimeFormat("uk-UA", options).format(now);
 
 const startLogOutTimer = function () {
   const tick = function () {
@@ -252,7 +252,7 @@ const startLogOutTimer = function () {
     labelTimer.textContent = `${min}:${sec}`;
     if (time === 0) {
       clearInterval(timer);
-      labelWelcome.textContent = "Log in to get started";
+      labelWelcome.textContent = "Войдите в свой аккаунт";
       containerApp.style.opacity = 0;
     }
     time--;
