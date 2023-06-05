@@ -119,7 +119,7 @@ const inputLoanAmount = document.querySelector(".form__input--loan-amount");
 const inputCloseUsername = document.querySelector(".form__input--user");
 const inputClosePin = document.querySelector(".form__input--pin");
 
-const formatTransactionDate = function (date) {
+const formatTransactionDate = function (date, locale) {
   const getDaysBetweenTwoDates = (date1, date2) =>
     Math.round(Math.abs(date1 - date2) / (1000 * 60 * 60 * 24));
   const daysPassed = getDaysBetweenTwoDates(new Date(), date);
@@ -128,11 +128,15 @@ const formatTransactionDate = function (date) {
   if (daysPassed === 1) return "Yesterday";
   if (daysPassed <= 7) return `${daysPassed} days ago`;
   else {
-    const day = `${date.getDate()}`.padStart(2, 0);
-    const month = `${date.getMonth() + 1}`.padStart(2, 0);
-    const year = date.getFullYear();
-    return `${day}/${month}/${year}`;
+    return new Intl.DateTimeFormat(locale).format(date);
   }
+};
+
+const formatCurrency = function (value, locale, currency) {
+  return new Intl.NumberFormat(locale, {
+    style: "currency",
+    currency: currency,
+  }).format(value);
 };
 
 function displayTransactions(account, sort = false) {
@@ -143,7 +147,13 @@ function displayTransactions(account, sort = false) {
   transacs.forEach(function (trans, index) {
     const transType = trans > 0 ? "deposit" : "withdrawal";
     const date = new Date(account.transactionsDates[index]);
-    const transDate = formatTransactionDate(date);
+    const transDate = formatTransactionDate(date, account.locale);
+
+    const formattedTransact = formatCurrency(
+      trans,
+      account.locale,
+      account.currency
+    );
 
     const transactionRow = `
    <div class="transactions__row">
@@ -152,25 +162,13 @@ function displayTransactions(account, sort = false) {
    </div>
    <div class="transactions__date">${transDate}</div>
   
-   <div class="transactions__value">${trans.toFixed(2)}</div>
+   <div class="transactions__value">${formattedTransact}</div>
  </div>
  `;
     containerTransactions.insertAdjacentHTML("afterbegin", transactionRow);
   });
 }
 
-// displayTransactions(account1.transactions);
-
-// console.log(containerTransactions.innerHTML);
-
-// const userName = "Oliver Avila"; //nickname = 'oa'
-// const nickName1 = userName
-//   .toLowerCase()
-//   .split(" ")
-//   .map(function (word) {
-//     return word[0];
-//   })
-//   .join("");
 const createNicknames = function (accs) {
   accs.forEach(function (acc) {
     acc.nickname = acc.userName
@@ -183,96 +181,48 @@ const createNicknames = function (accs) {
 
 createNicknames(accounts);
 
-// const nickName = userName
-//   .toLowerCase()
-//   .split(" ")
-//   .map((word) => word[0])
-//   .join("");
-
-// console.log(nickName1, nickName);
-
-// function createNickName(accounts) {
-//   accounts.forEach(function (account) {
-//     account.nickName = account.userName
-//       .toLowerCase()
-//       .split(" ")
-//       .map((word) => word[0])
-//       .join("");
-//   });
-// }
-
-// createNickName(accounts);
-// console.log(accounts);
-
-// const transactions = [500, 200, 1100, -800];
-
-// const withDrawls = transactions.filter(function (trans) {
-//   return trans < 0;
-// });
-
-// const deposits = transactions.filter((trans) => trans > 0);
-
-// const balanceTrans = transactions.reduce((x, y) => x + y, 0);
-// const balanceTrans1 = transactions.reduce(function (acc, item, index, arr) {
-//   // console.log(`Iteration ${index}: ${acc}`);
-//   return acc + item;
-// }, 0);
-
-// console.log(balanceTrans1);
-// console.log("-------------------------------");
-// let sum = 0;
-// for (const trans of transactions) {
-//   sum += trans;
-//   console.log(sum);
-// }
-
-//Get min value of transactions
-
-// const minValue = transactions.reduce((x, y) => {
-//   if (x < y) {
-//     return x;
-//   } else {
-//     return y;
-//   }
-// }, transactions[0]);
-
-// const maxValue = transactions.reduce(
-//   (x, y) => (x > y ? x : y),
-//   transactions[0]
-// );
-
-// console.log(minValue, maxValue);
 const displayBalance = function (account) {
   const balance = account.transactions.reduce((x, y) => x + y, 0);
   account.balance = balance;
-  labelBalance.textContent = `${balance.toFixed(2)}$`;
+  labelBalance.textContent = formatCurrency(
+    balance,
+    account.locale,
+    account.currency
+  );
 };
-
-// displayBalance(account);
 
 const displayTotal = function (account) {
   const depositTotal = account.transactions
     .filter((transaction) => transaction > 0)
     .reduce((x, y) => x + y, 0);
-  labelSumIn.textContent = `${depositTotal.toFixed(2)}$`;
+  labelSumIn.textContent = formatCurrency(
+    depositTotal,
+    account.locale,
+    account.currency
+  );
 
   const withdrawTotal = account.transactions
     .filter((transaction) => transaction < 0)
     .reduce((x, y) => x + y, 0);
-  labelSumOut.textContent = `${withdrawTotal.toFixed(2)}$`;
+  labelSumOut.textContent = formatCurrency(
+    withdrawTotal,
+    account.locale,
+    account.currency
+  );
 
   const interestTotal = account.transactions
     .filter((transaction) => transaction > 0)
     .map((deposit) => (deposit * account.interest) / 100)
     .filter((interest, index, array) => {
-      // console.log(array);
       return interest >= 5;
     })
     .reduce((x, y) => x + y, 0);
-  labelSumInterest.textContent = `${interestTotal.toFixed(2)}$`;
+  labelSumInterest.textContent = formatCurrency(
+    interestTotal,
+    account.locale,
+    account.currency
+  );
 };
-
-// displayTotal(account1.transactions);
 
 let currentAccount;
 
@@ -280,12 +230,6 @@ let currentAccount;
 currentAccount = account1;
 updateUI(currentAccount);
 containerApp.style.opacity = 100;
-//Display date
-// const now = new Date();
-// const month = `${now.getMonth() + 1}`.padStart(2, 0);
-// const day = `${now.getDate()}`.padStart(2, 0);
-// const year = now.getFullYear();
-// labelDate.textContent = `${day}/${month}/${year}`;
 
 const now = new Date();
 const options = {
@@ -300,6 +244,24 @@ const options = {
 const locale = navigator.language;
 console.log(locale);
 labelDate.textContent = new Intl.DateTimeFormat("uk-UA", options).format(now);
+
+const startLogOutTimer = function () {
+  const tick = function () {
+    const min = String(Math.trunc(time / 60)).padStart(2, 0);
+    const sec = String(time % 60).padStart(2, 0);
+    labelTimer.textContent = `${min}:${sec}`;
+    if (time === 0) {
+      clearInterval(timer);
+      labelWelcome.textContent = "Log in to get started";
+      containerApp.style.opacity = 0;
+    }
+    time--;
+  };
+  let time = 300;
+  tick();
+  const timer = setInterval(tick, 1000);
+  return timer;
+};
 
 function updateUI(account) {
   displayTransactions(account);
@@ -319,12 +281,7 @@ btnLogin.addEventListener("click", function (e) {
       currentAccount.userName.split(" ")[0]
     }!`;
     containerApp.style.opacity = 100;
-    //Display date
-    // const now = new Date();
-    // const month = `${now.getMonth() + 1}`.padStart(2, 0);
-    // const day = `${now.getDate()}`.padStart(2, 0);
-    // const year = now.getFullYear();
-    // labelDate.textContent = `${day}/${month}/${year}`;
+
     const now = new Date();
     const options = {
       hour: "numeric",
@@ -344,6 +301,7 @@ btnLogin.addEventListener("click", function (e) {
     inputLoginUsername.value = inputLoginPin.value = "";
     inputLoginPin.value = "";
     inputLoginPin.blur();
+    startLogOutTimer();
     updateUI(currentAccount);
   } else {
     alert("Wrong username or password");
@@ -405,16 +363,13 @@ btnLoan.addEventListener("click", function (e) {
   if (
     loanAmount > 0 &&
     currentAccount.transactions.some((x) => x >= (loanAmount * 10) / 100)
-  ) {
-    //Add loan to current account
-    currentAccount.transactions.push(loanAmount);
-
-    //Add Date
-    currentAccount.transactionsDates.push(new Date().toISOString());
-
-    //Update UI
-    updateUI(currentAccount);
-  } else {
+  )
+    setTimeout(function () {
+      currentAccount.transactions.push(loanAmount);
+      currentAccount.transactionsDates.push(new Date().toISOString());
+      updateUI(currentAccount);
+    }, 3000);
+  else {
     alert("Invalid loan");
   }
   inputLoanAmount.value = "";
@@ -427,63 +382,6 @@ btnSort.addEventListener("click", function (e) {
   displayTransactions(currentAccount, !sortedTransactions);
   sortedTransactions = !sortedTransactions;
 });
-
-//Array.from example
-
-// const logoImage = document.querySelector(".logo");
-// logoImage.addEventListener("click", function (e) {
-//   e.preventDefault();
-//   const transactionsUI = document.querySelectorAll(".transactions__value");
-//   console.log(transactionsUI);
-//   // const transactionsUIArray = Array.from(transactionsUI);
-//   // console.log(transactionsUIArray.map((x) => x.textContent));
-//   const transactionsUIArray = Array.from(transactionsUI, (x) => +x.textContent);
-//   console.log(transactionsUIArray);
-// });
-
-//Flat and flatMap Ex 1
-// const bankDepositSum = accounts
-//   .flatMap((account) => account.transactions)
-//   .filter((x) => x > 0)
-//   .reduce((x, y) => x + y);
-// console.log("Bank deposit Sum: ", bankDepositSum);
-
-//Ex 2
-// const withdrawalsOver500 = accounts
-//   .flatMap((account) => account.transactions)
-//   .filter((x) => x < 0)
-//   .filter((x) => x <= -500);
-// console.log("Withdrawals over 500: ", withdrawalsOver500);
-
-//Ex 3
-// const withdrawalsOver300 = accounts
-//   .flatMap((account) => account.transactions)
-//   .reduce(
-//     (counter, transaction) => (transaction <= -300 ? counter + 1 : counter),
-//     0
-//   );
-// console.log("Withdrawals over 300: ", withdrawalsOver300);
-
-//Ex 4
-// const { depositsTotal, withdrawalsTotal } = accounts
-//   .flatMap((account) => account.transactions)
-//   .reduce(
-//     (acc, trans) => {
-//       // trans > 0
-//       //   ? (acc.depositsTotal += trans)
-//       //   : (acc.withdrawalsTotal += trans);
-//       acc[trans > 0 ? "depositsTotal" : "withdrawalsTotal"] += trans;
-//       return acc;
-//     },
-//     { depositsTotal: 0, withdrawalsTotal: 0 }
-//   );
-// console.log("Deposits total: ", depositsTotal);
-// console.log("Withdrawals total: ", withdrawalsTotal);
-// [...document.querySelectorAll(".transactions__row")].forEach(function (row, i) {
-//   if (i % 2 === 0) {
-//     row.style.backgroundColor = "gray";
-//   }
-// });
 
 const logoImage = document.querySelector(".logo");
 logoImage.addEventListener("click", function (e) {
