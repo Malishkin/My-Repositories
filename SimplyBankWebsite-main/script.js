@@ -77,7 +77,7 @@ btnScrollTo.addEventListener('click', function (e) {
 });
 
 // //////////////////////////////////
-// Page navigation
+// Smooth Simple Page navigation
 
 // btnScrollTo.addEventListener('click', function (e) {
 //   section1.scrollIntoView({ behavior: 'smooth' });
