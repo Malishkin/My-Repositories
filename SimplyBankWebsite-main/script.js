@@ -358,6 +358,10 @@ dotContainer.addEventListener('click', function (e) {
 // // message.textContent = 'Мы используем на этом сайте cookie для улучшения функциональности.';
 // message.innerHTML =
 //   'Мы используем на этом сайте cookie для улучшения функциональности. <button class="btn btn--close-cookie">Ок!</button>';
+// header.before(message);
+// header.after(message);
+// header.prepend(message);
+// header.append(message.cloneNode(true));
 
 // const header = document.querySelector('.header');
 // // header.prepend(message);
@@ -532,3 +536,5 @@ window.addEventListener('load', function (e) {
 //   console.log(e);
 //   e.returnValue = '';
 // });
+
+/////////////////////////////////////////////////
