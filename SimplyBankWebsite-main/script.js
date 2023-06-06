@@ -49,7 +49,7 @@ document.addEventListener('keydown', function (e) {
 
 btnScrollTo.addEventListener('click', function (e) {
   const section1Coords = section1.getBoundingClientRect();
-  console.log(section1Coords);
+  console.log('section1Coords: ', section1Coords);
   console.log(e.target.getBoundingClientRect());
   console.log(
     'Текущее прокручивание: x, y',
@@ -62,20 +62,55 @@ btnScrollTo.addEventListener('click', function (e) {
     document.documentElement.clientHeight
   );
 
-  // window.scrollTo(
-  //   section1Coords.left + window.pageXOffset,
-  //   section1Coords.top + window.pageYOffset
-  // );
+  //   // window.scrollTo(
+  //   //   section1Coords.left + window.pageXOffset,
+  //   //   section1Coords.top + window.pageYOffset
+  //   // );
 
-  // window.scrollTo({
-  //   left: section1Coords.left + window.pageXOffset,
-  //   top: section1Coords.top + window.pageYOffset,
-  //   behavior: 'smooth',
-  // });
+  //   // window.scrollTo({
+  //   //   left: section1Coords.left + window.pageXOffset,
+  //   //   top: section1Coords.top + window.pageYOffset,
+  //   //   behavior: 'smooth',
+  //   // });
 
   section1.scrollIntoView({ behavior: 'smooth' });
 });
 
+// //////////////////////////////////
+// Page navigation
+
+// btnScrollTo.addEventListener('click', function (e) {
+//   section1.scrollIntoView({ behavior: 'smooth' });
+// });
+
+//Smooth page navigation old browsers solution
+
+// btnScrollTo.addEventListener(
+//   'click',
+//   function (e) {
+//     e.preventDefault();
+
+//     var startPosition = window.pageYOffset;
+//     var distance = section1.getBoundingClientRect().top;
+//     var startTime = null;
+
+//     function animation(currentTime) {
+//       if (startTime === null) startTime = currentTime;
+//       var timeElapsed = currentTime - startTime;
+//       var run = ease(timeElapsed, startPosition, distance, 1000);
+//       window.scrollTo(0, run);
+//       if (timeElapsed < 1000) requestAnimationFrame(animation);
+//     }
+//     function ease(t, b, c, d) {
+//       t /= d / 2;
+//       if (t < 1) return (c / 2) * t * t + b;
+//       t--;
+//       return (-c / 2) * (t * (t - 2) - 1) + b;
+//     }
+//     requestAnimationFrame(animation);
+//   },
+//   false
+// );
 ///////////////////////////////////////////////
 // Smooth page navigation
 
