@@ -530,7 +530,7 @@ dotContainer.addEventListener('click', function (e) {
 //////////////////////////////////////////////
 // DOM traversing (Перемещение по DOM)
 
-// const h1 = document.querySelector('h1');
+const h1 = document.querySelector('h1');
 
 // // Перемещение вниз (к потомкам)
 // console.log(h1.querySelectorAll('.highlight'));
