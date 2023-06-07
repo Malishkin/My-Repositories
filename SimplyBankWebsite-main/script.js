@@ -485,25 +485,25 @@ dotContainer.addEventListener('click', function (e) {
 // Event Propagation
 // rgb(123, 56, 78)
 
-function getRandomIntInclusive(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1) + min); //The maximum is inclusive and the minimum is inclusive
-}
+// function getRandomIntInclusive(min, max) {
+//   min = Math.ceil(min);
+//   max = Math.floor(max);
+//   return Math.floor(Math.random() * (max - min + 1) + min); //The maximum is inclusive and the minimum is inclusive
+// }
 
-const getRandomColor = () =>
-  `rgb(${getRandomIntInclusive(0, 255)}, ${getRandomIntInclusive(
-    0,
-    255
-  )}, ${getRandomIntInclusive(0, 255)})`;
+// const getRandomColor = () =>
+//   `rgb(${getRandomIntInclusive(0, 255)}, ${getRandomIntInclusive(
+//     0,
+//     255
+//   )}, ${getRandomIntInclusive(0, 255)})`;
 
-document.querySelector('.nav__link').addEventListener('click', function (e) {
-  this.style.backgroundColor = getRandomColor();
-  console.log('Link', e.target, e.currentTarget);
-  console.log(this === e.currentTarget);
-  // Stop propagation
-  // e.stopPropagation();
-});
+// document.querySelector('.nav__link').addEventListener('click', function (e) {
+//   this.style.backgroundColor = getRandomColor();
+//   console.log('Link', e.target, e.currentTarget);
+//   console.log(this === e.currentTarget);
+//   // Stop propagation
+//   // e.stopPropagation();
+// });
 
 // document.querySelector('.nav__links').addEventListener('click', function (e) {
 //   this.style.backgroundColor = getRandomColor();
