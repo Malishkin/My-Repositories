@@ -7,7 +7,6 @@ const inputDistance = document.querySelector('.form__input--distance');
 const inputDuration = document.querySelector('.form__input--duration');
 const inputCadence = document.querySelector('.form__input--temp');
 const inputElevation = document.querySelector('.form__input--climb');
-console.log(foo);
 
 if (navigator.geolocation) {
   navigator.geolocation.getCurrentPosition(
