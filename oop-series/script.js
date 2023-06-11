@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 ////////////////////////////////////////////////////////////////////////
 // Функции-Конструкторы и Оператор new
@@ -693,6 +693,7 @@ class Car {
   }
 }
 
+
 class ElectricCar extends Car {
   #battery;
 
@@ -718,7 +719,7 @@ class ElectricCar extends Car {
   }
 }
 
-const tesla = new ElectricCar('Тесла', 100, 33);
+const tesla = new ElectricCar("Тесла", 100, 33);
 console.log(tesla);
 tesla.chargeBattery(80);
 // console.log(tesla.#battery);
@@ -729,7 +730,7 @@ tesla.breake();
 
 tesla.accelerate();
 
-const bmw = new Car('BMW', 150);
+const bmw = new Car("BMW", 150);
 
 bmw.breake();
 bmw.breake();
