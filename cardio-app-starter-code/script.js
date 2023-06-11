@@ -27,6 +27,7 @@ class Running extends Workout {
   }
 
   calcPace() {
+    // min/km
     this.pace = this.duration / this.distance;
     return this.pace;
   }
@@ -40,11 +41,16 @@ class Cycling extends Workout {
   }
 
   calcSpeed() {
+    // km/h
     this.speed = this.distance / (this.duration / 60);
     return this.speed;
   }
 }
 
+// const run1 = new Running([32.13, 34.8], 5.2, 24, 42);
+// const cycling1 = new Cycling([32.13, 34.8], 27, 95, 523);
+
+console.log(run1, cycling1);
 class App {
   #map;
   #mapEvent;
@@ -91,6 +97,44 @@ class App {
   }
 
   _newWorkout(e) {
+    //Get data from form
+    const type = inputType.value;
+    const distance = +inputDistance.value;
+    const duration = +inputDuration.value;
+    const { latit, lngit } = this.#mapEvent.latlng;
+    let workout;
+
+    //Check if data is valid
+    if (
+      !Number.isFinite(distance) ||
+      !Number.isFinite(duration) ||
+      !Number.isFinite(latit) ||
+      !Number.isFinite(lngit)
+    )
+      return alert('Inputs have to be positive numbers!');
+
+    //If workout running, create running object
+    if (type === 'running') {
+      const temp = +inputTemp.value;
+      workout = new Running([latit, lngit], distance, duration, temp);
+    }
+
+    //If workout cycling, create cycling object
+    if (type === 'cycling') {
+      const climb = +inputClimb.value;
+      workout = new Cycling([latit, lngit], distance, duration, climb);
+    }
+
+    //Add new object to workout array
+    workout.push(workout);
+    console.log(workout);
+
+    //Render workout on map as marker
+    workout.renderMarker();
+
+    //Render workout on list
+    workout.renderWorkout();
+
     e.preventDefault();
     // Clear input fields
     inputDistance.value =
@@ -101,6 +145,26 @@ class App {
     // Display marker
     const { lat, lng } = this.#mapEvent.latlng;
     L.marker([lat, lng]).addTo(this.#map).bindPopup('Workout').openPopup();
+  }
+
+  renderMarker() {
+    L.marker(this.coords).addTo(this.#map).bindPopup('Workout').openPopup();
+  }
+
+  renderWorkout() {
+    const html = `
+    <li class="workout workout--running">
+    <h2 class="workout__title">Running on April 14</h2>
+    <div class="workout__details">
+      <span class="workout__icon">🏃‍♂️</span>
+      <span class="workout__value">5.2</span>
+      <span class="workout__unit">km</span>
+    </div>
+    <div class="workout__details">
+      <span class="workout__icon">⏱</span>
+      <span class="workout__value">24</span>
+      <span class="workout__unit">min</span>
+    </div>`;
   }
 }
 
