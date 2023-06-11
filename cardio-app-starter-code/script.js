@@ -6,7 +6,7 @@ const inputType = document.querySelector('.form__input--type');
 const inputDistance = document.querySelector('.form__input--distance');
 const inputDuration = document.querySelector('.form__input--duration');
 const inputTemp = document.querySelector('.form__input--temp');
-const inputElevation = document.querySelector('.form__input--climb');
+const inputClimb = document.querySelector('.form__input--climb');
 
 let map, mapEvent;
 if (navigator.geolocation) {
@@ -47,7 +47,7 @@ form.addEventListener('submit', function (e) {
   inputDistance.value =
     inputDuration.value =
     inputTemp.value =
-    inputElevation.value =
+    inputClimb.value =
       '';
   // Display marker
   console.log(mapEvent);
