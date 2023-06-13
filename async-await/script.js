@@ -188,6 +188,12 @@ btn.addEventListener('click', function () {
 /////////////////////////////////////////////
 
 const lotteryPromise = new Promise(function (resolve, reject) {
-  console.log('Initial');
-  resolve();
+  console.log('Lottery draw is happening 🔮');
+  setTimeout(function () {
+    if (Math.random() >= 0.5) {
+      resolve('You WIN 💰');
+    }
+    reject(new Error('You lost your money 💩'));
+  }, 3000);
 });
+lotteryPromise.then(res => console.log(res)).catch(err => console.error(err));
