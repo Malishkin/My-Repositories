@@ -328,22 +328,27 @@ const displayUserCountry = function () {
 //   .catch(err => console.error(err));
 
 const getCountryData1 = async function () {
-  const userPosition = await getUserPosition();
-  const { latitude: lat, longitude: lng } = userPosition.coords;
-  const geocodingResponse = await fetch(
-    `https://geocode.xyz/${lat},${lng}?geoit=json`
-  );
-  if (!geocodingResponse.ok) {
-    throw new Error(
-      `Проблема с геокодированием (ошибка ${geocodingResponse.status})`
+  try {
+    const userPosition = await getUserPosition();
+    const { latitude: lat, longitude: lng } = userPosition.coords;
+    const geocodingResponse = await fetch(
+      `https://geocode.xyz/${lat},${lng}?geoit=json`
     );
+    if (!geocodingResponse.ok) {
+      throw new Error(
+        `Проблема с геокодированием (ошибка ${geocodingResponse.status})`
+      );
+    }
+    const geocodingData = await geocodingResponse.json();
+    const response = await fetch(
+      `https://restcountries.com/v3.1/name/${geocodingData.country.toLowerCase()}`
+    );
+    const data = await response.json();
+    displayCountry(data[0]);
+  } catch (err) {
+    console.error(`${err} 🧐`);
+    displayError(`Что-то пошло не так 🧐: ${err.message} Попробуйте ещё раз!`);
   }
-  const geocodingData = await geocodingResponse.json();
-  const response = await fetch(
-    `https://restcountries.com/v3.1/name/${geocodingData.country.toLowerCase()}`
-  );
-  const data = await response.json();
-  displayCountry(data[0]);
 };
 
 btn.addEventListener('click', getCountryData1());
