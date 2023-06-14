@@ -283,29 +283,29 @@ const displayUserCountry = function () {
 
 // btn.addEventListener('click', displayUserCountry);
 
-// function createImageElement(imagePath) {
-//   return new Promise((resolve, reject) => {
-//     const img = document.createElement('img');
-//     img.src = imagePath;
+function createImageElement(imagePath) {
+  return new Promise((resolve, reject) => {
+    const img = document.createElement('img');
+    img.src = imagePath;
 
-//     img.addEventListener('load', () => {
-//       document.querySelector('.images').appendChild(img);
-//       resolve(img);
-//     });
+    img.addEventListener('load', () => {
+      document.querySelector('.images').appendChild(img);
+      resolve(img);
+    });
 
-//     img.addEventListener('error', () => {
-//       reject(new Error('Failed to load image.'));
-//     });
-//   });
-// }
+    img.addEventListener('error', () => {
+      reject(new Error('Failed to load image.'));
+    });
+  });
+}
 
 // let currentImg;
 
-// const wait = function (seconds) {
-//   return new Promise(function (resolve) {
-//     setTimeout(resolve, seconds * 1000);
-//   });
-// };
+const wait = function (seconds) {
+  return new Promise(function (resolve) {
+    setTimeout(resolve, seconds * 1000);
+  });
+};
 
 // createImageElement('img/image1.jpg')
 //   .then(img => {
@@ -359,7 +359,7 @@ const getCountryData1 = async function () {
 };
 
 // btn.addEventListener('click', getCountryData1());
-console.log('1 Будем получать данные о стране');
+// console.log('1 Будем получать данные о стране');
 // getCountryData1()
 //   .then(res => console.log(`2 ${res}`))
 //   .catch(err => console.error(`2 ${err.message} 🧐`))
@@ -439,8 +439,24 @@ const setTimeoutPromise = function (seconds) {
 //   .then(res => console.log(res))
 //   .catch(err => console.error(err));
 
+async function loadAndWait() {
+  try {
+    const imagePaths = ['img/image1.jpg', 'img/image2.jpg', 'img/image3.jpg'];
 
-async function loadAllImages(imagePathsArray) {
+    for (const imagePath of imagePaths) {
+      const img = await createImageElement(imagePath);
+      document.querySelector('.images').appendChild(img);
+      await wait(2);
+      img.style.display = 'none';
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// loadAndWait();
+
+async function loadAllImages1(imagePathsArray) {
   try {
     const images = await Promise.all(
       imagePathsArray.map(async imagePath => {
@@ -456,5 +472,19 @@ async function loadAllImages(imagePathsArray) {
   }
 }
 
-loadAllImages(['img/image1.jpg', 'img/image2.jpg', 'img/image3.jpg']);
+const loadAllImages = async function (imagePathsArray) {
+  try {
+    const images = imagePathsArray.map(
+      async imagePath => await createImageElement(imagePath)
+    );
+    console.log(images);
 
+    const imageElements = await Promise.all(images);
+    console.log(imageElements);
+    imageElements.forEach(img => img.classList.add('parallel'));
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+loadAllImages(['img/image1.jpg', 'img/image2.jpg', 'img/image3.jpg']);
