@@ -349,13 +349,112 @@ const getCountryData1 = async function () {
     const data = await response.json();
     console.log(data);
     displayCountry(data[0]);
+    return `Вы находитесь в ${geocodingData.city}, ${geocodingData.country}`;
   } catch (err) {
-    console.error(`${err} 🧐`);
+    console.error(`1 ${err} 🧐`);
     displayError(`Что-то пошло не так 🧐: ${err.message} Попробуйте ещё раз!`);
   }
+  // Отклоняем промис, если что-то пошло не так
+  throw err;
 };
 
 // btn.addEventListener('click', getCountryData1());
-console.log('Будем получать данные о стране');
-getCountryData1();
-console.log('Получили данные о стране');
+console.log('1 Будем получать данные о стране');
+// getCountryData1()
+//   .then(res => console.log(`2 ${res}`))
+//   .catch(err => console.error(`2 ${err.message} 🧐`))
+//   .finally(() => console.log('3 Получили данные о стране'));
+
+// (async function () {
+//   try {
+//     const res = await getCountryData1();
+//     console.log(`2 ${res}`);
+//   } catch (err) {
+//     console.error(`2 ${err.message} 🧐`);
+//   }
+//   console.log('3 Получили данные о стране');
+// })();
+
+const printThreeCountriesCapitals = async function (c1, c2, c3) {
+  try {
+    const capitals = await Promise.all([
+      getCapitalOfCountry(c1),
+      getCapitalOfCountry(c2),
+      getCapitalOfCountry(c3),
+    ]);
+    console.log(capitals);
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+const getCapitalOfCountry = async function (country) {
+  const response = await getDataAndConvertToJSON(
+    `https://restcountries.com/v3.1/name/${country.toLowerCase()}`
+  );
+  if (!response[0].capital) throw new Error(`Страна ${country} не найдена.`);
+  return response[0].capital;
+};
+
+//Promise.race()
+
+// (async function () {
+//   const response = await Promise.race([
+//     getCapitalOfCountry('Israel'),
+//     getCapitalOfCountry('Germany'),
+//     getCapitalOfCountry('USA'),
+//   ]);
+//   console.log(response[0]);
+// })();
+
+const setTimeoutPromise = function (seconds) {
+  return new Promise(function (_, reject) {
+    setTimeout(() => {
+      reject(new Error('Запрос превысил максимальное время ожидания'));
+    }, seconds * 1000);
+  });
+};
+
+// Promise.race([getCapitalOfCountry('USA'), setTimeoutPromise(1)])
+//   .then(res => console.log(res))
+//   .catch(err => console.error(err));
+
+//Promise.allSettled()
+// Promise.allSettled([
+//   Promise.resolve('Success'),
+//   Promise.reject('ERROR'),
+//   Promise.resolve('Another success'),
+// ])
+//   .then(res => console.log(res))
+//   .catch(err => console.error(err));
+// console.log('Остальной код');
+
+//Promise.any()
+// Promise.any([
+//   Promise.reject('ERROR'),
+//   Promise.resolve('Success'),
+
+//   Promise.resolve('Another success'),
+// ])
+//   .then(res => console.log(res))
+//   .catch(err => console.error(err));
+
+
+async function loadAllImages(imagePathsArray) {
+  try {
+    const images = await Promise.all(
+      imagePathsArray.map(async imagePath => {
+        const img = await createImageElement(imagePath);
+        img.classList.add('parallel');
+        return img;
+      })
+    );
+
+    console.log(images);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+loadAllImages(['img/image1.jpg', 'img/image2.jpg', 'img/image3.jpg']);
+
