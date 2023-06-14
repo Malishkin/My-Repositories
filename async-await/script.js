@@ -135,9 +135,9 @@ const getCountryData = function (country) {
       countriesContainer.style.opacity = 1;
     });
 };
-btn.addEventListener('click', function () {
-  getCountryData('greenland');
-});
+// btn.addEventListener('click', function () {
+//   getCountryData('greenland');
+// });
 
 ///////////////////////////////////////////
 
@@ -187,46 +187,98 @@ btn.addEventListener('click', function () {
 
 /////////////////////////////////////////////
 
-const lotteryPromise = new Promise(function (resolve, reject) {
-  console.log('Lottery draw is happening 🔮');
-  setTimeout(function () {
-    if (Math.random() >= 0.5) {
-      resolve('You WIN 💰');
-    }
-    reject(new Error('You lost your money 💩'));
-  }, 3000);
-});
-lotteryPromise.then(res => console.log(res)).catch(err => console.error(err));
+// const lotteryPromise = new Promise(function (resolve, reject) {
+//   console.log('Lottery draw is happening 🔮');
+//   setTimeout(function () {
+//     if (Math.random() >= 0.5) {
+//       resolve('You WIN 💰');
+//     }
+//     reject(new Error('You lost your money 💩'));
+//   }, 3000);
+// });
+// lotteryPromise.then(res => console.log(res)).catch(err => console.error(err));
 
 //Promisifying setTimeout
-const wait = function (seconds) {
-  return new Promise(function (resolve) {
-    setTimeout(resolve, seconds * 1000);
-  });
-};
+// const wait = function (seconds) {
+//   return new Promise(function (resolve) {
+//     setTimeout(resolve, seconds * 1000);
+//   });
+// };
 
 // wait(3).then(() => {
 //   console.log('I waited for 3 seconds');
 //   return wait(2).then(() => console.log('I waited for 2 seconds'));
 // });
 
-wait(1)
-  .then(() => {
-    console.log('Прошла 1 секунда');
-    return wait(1);
-  })
-  .then(() => {
-    console.log('Прошла 2 секунда');
-    return wait(1);
-  })
-  .then(() => {
-    console.log('Прошла 3 секунда');
-    return wait(1);
-  })
-  .then(() => {
-    console.log('Прошла 4 секунда');
-    return wait(1);
-  });
+// wait(1)
+//   .then(() => {
+//     console.log('Прошла 1 секунда');
+//     return wait(1);
+//   })
+//   .then(() => {
+//     console.log('Прошла 2 секунда');
+//     return wait(1);
+//   })
+//   .then(() => {
+//     console.log('Прошла 3 секунда');
+//     return wait(1);
+//   })
+//   .then(() => {
+//     console.log('Прошла 4 секунда');
+//     return wait(1);
+//   });
 
-Promise.resolve('Resolved!').then(res => console.log(res));
-Promise.reject(new Error('Rejected!')).catch(err => console.error(err));
+// Promise.resolve('Resolved!').then(res => console.log(res));
+// Promise.reject(new Error('Rejected!')).catch(err => console.error(err));
+
+/////////////////////////////////////////////
+//Промисификация геолокации API
+
+const getUserPosition = function () {
+  return new Promise(function (resolve, reject) {
+    // navigator.geolocation.getCurrentPosition(
+    //   position => resolve(position),
+    //   err => reject(err)
+    // );
+    navigator.geolocation.getCurrentPosition(resolve, reject);
+  });
+};
+
+getUserPosition()
+  .then(pos => console.log(pos))
+  .catch(err => console.error(err));
+
+const displayUserCountry = function () {
+  getUserPosition()
+    .then(pos => {
+      const { latitude: lat, longitude: lng } = pos.coords;
+      return fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`);
+    })
+    .then(response => {
+      if (!response.ok)
+        throw new Error(
+          `Проблема с геокодированием (ошибка ${response.status})`
+        );
+      return response.json();
+    })
+    .then(data => {
+      console.log(data);
+      console.log(`You are in ${data.city}, ${data.country}`);
+      return getDataAndConvertToJSON(
+        `https://restcountries.com/v3.1/name/${data.country.toLowerCase()}`,
+        'Страна не найдена.'
+      );
+    })
+    .then(data => displayCountry(data[0]))
+    .catch(e => {
+      console.error(`${e} 🧐`);
+      displayError(`Что-то пошло не так 🧐: ${e.message} Попробуйте ещё раз!`);
+    })
+    .finally(() => {
+      countriesContainer.style.opacity = 1;
+    })
+
+    .catch(e => console.error(`${e.message} 🧐`));
+};
+
+btn.addEventListener('click', displayUserCountry);
