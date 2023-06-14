@@ -57,12 +57,12 @@ const displayCountry = function (data, className = '') {
       </article>
     `;
   countriesContainer.insertAdjacentHTML('beforeend', html);
-  //   countriesContainer.style.opacity = 1;
+  countriesContainer.style.opacity = 1;
 };
 
 const displayError = function (err) {
   countriesContainer.insertAdjacentText('beforeend', err);
-  //   countriesContainer.style.opacity = 1;
+  countriesContainer.style.opacity = 1;
 };
 
 const getDataAndConvertToJSON = function (
@@ -283,46 +283,69 @@ const displayUserCountry = function () {
 
 // btn.addEventListener('click', displayUserCountry);
 
-function createImageElement(imagePath) {
-  return new Promise((resolve, reject) => {
-    const img = document.createElement('img');
-    img.src = imagePath;
+// function createImageElement(imagePath) {
+//   return new Promise((resolve, reject) => {
+//     const img = document.createElement('img');
+//     img.src = imagePath;
 
-    img.addEventListener('load', () => {
-      document.querySelector('.images').appendChild(img);
-      resolve(img);
-    });
+//     img.addEventListener('load', () => {
+//       document.querySelector('.images').appendChild(img);
+//       resolve(img);
+//     });
 
-    img.addEventListener('error', () => {
-      reject(new Error('Failed to load image.'));
-    });
-  });
-}
+//     img.addEventListener('error', () => {
+//       reject(new Error('Failed to load image.'));
+//     });
+//   });
+// }
 
-let currentImg;
+// let currentImg;
 
-const wait = function (seconds) {
-  return new Promise(function (resolve) {
-    setTimeout(resolve, seconds * 1000);
-  });
+// const wait = function (seconds) {
+//   return new Promise(function (resolve) {
+//     setTimeout(resolve, seconds * 1000);
+//   });
+// };
+
+// createImageElement('img/image1.jpg')
+//   .then(img => {
+//     currentImg = img;
+//     console.log('Image 1 loaded');
+//     return wait(2);
+//   })
+//   .then(() => {
+//     currentImg.style.display = 'none';
+//     return createImageElement('img/image2.jpg');
+//   })
+//   .then(img => {
+//     currentImg = img;
+//     console.log('Image 2 loaded');
+//     return wait(2);
+//   })
+//   .then(() => {
+//     currentImg.style.display = 'none';
+//   })
+//   .catch(err => console.error(err));
+
+const getCountryData1 = async function () {
+  const userPosition = await getUserPosition();
+  const { latitude: lat, longitude: lng } = userPosition.coords;
+  const geocodingResponse = await fetch(
+    `https://geocode.xyz/${lat},${lng}?geoit=json`
+  );
+  if (!geocodingResponse.ok) {
+    throw new Error(
+      `Проблема с геокодированием (ошибка ${geocodingResponse.status})`
+    );
+  }
+  const geocodingData = await geocodingResponse.json();
+  const response = await fetch(
+    `https://restcountries.com/v3.1/name/${geocodingData.country.toLowerCase()}`
+  );
+  const data = await response.json();
+  displayCountry(data[0]);
 };
 
-createImageElement('img/image1.jpg')
-  .then(img => {
-    currentImg = img;
-    console.log('Image 1 loaded');
-    return wait(2);
-  })
-  .then(() => {
-    currentImg.style.display = 'none';
-    return createImageElement('img/image2.jpg');
-  })
-  .then(img => {
-    currentImg = img;
-    console.log('Image 2 loaded');
-    return wait(2);
-  })
-  .then(() => {
-    currentImg.style.display = 'none';
-  })
-  .catch(err => console.error(err));
+btn.addEventListener('click', function () {
+  getCountryData1();
+});
