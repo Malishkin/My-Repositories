@@ -346,6 +346,4 @@ const getCountryData1 = async function () {
   displayCountry(data[0]);
 };
 
-btn.addEventListener('click', function () {
-  getCountryData1();
-});
+btn.addEventListener('click', getCountryData1());
