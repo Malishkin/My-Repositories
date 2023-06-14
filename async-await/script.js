@@ -343,7 +343,11 @@ const getCountryData1 = async function () {
     const response = await fetch(
       `https://restcountries.com/v3.1/name/${geocodingData.country.toLowerCase()}`
     );
+    if (!response.ok) {
+      throw new Error(`Страна не найдена.`);
+    }
     const data = await response.json();
+    console.log(data);
     displayCountry(data[0]);
   } catch (err) {
     console.error(`${err} 🧐`);
@@ -351,4 +355,7 @@ const getCountryData1 = async function () {
   }
 };
 
-btn.addEventListener('click', getCountryData1());
+// btn.addEventListener('click', getCountryData1());
+console.log('Будем получать данные о стране');
+getCountryData1();
+console.log('Получили данные о стране');
