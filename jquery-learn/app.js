@@ -21,6 +21,10 @@ newDiv.addClass("someClass");
 $("body").append(newDiv);
 
 var newButton = $("<button>Нажми меня</button>");
+
+newButton.css("background-color", "red");
+
+$("body").append(newButton);
 newButton.click(function () {
   alert("Привет, мир!");
 });
