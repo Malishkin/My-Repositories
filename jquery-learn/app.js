@@ -1,15 +1,5 @@
-// 1. Создание элемента
-// var newDiv = document.createElement('div');
 
-// // 2. Установка свойств для этого элемента
-// newDiv.innerHTML = 'Привет, мир!';
-// newDiv.id = 'myNewDiv';
-// newDiv.className = 'someClass';
-
-// // 3. Добавление элемента в DOM
-// document.body.appendChild(newDiv);
-
-// Создание элемента
+// JQuery
 var container = $("<div></div>").css({
   display: "flex",
   "justify-content": "center",
@@ -36,3 +26,34 @@ var newButton = $("<button>Нажми меня</button>")
 
 container.append(newDiv, newButton);
 $("body").append(container);
+
+
+//JavaScript 
+// Создание элемента
+// var container = document.createElement('div');
+// container.style.display = "flex";
+// container.style.justifyContent = "center";
+// container.style.alignItems = "center";
+// container.style.height = "100vh";
+// container.style.flexDirection = "column";
+
+// var newDiv = document.createElement('div');
+// newDiv.textContent = "Привет, мир!";
+// newDiv.id = "myNewDiv";
+// newDiv.className = "someClass";
+
+// var newButton = document.createElement('button');
+// newButton.textContent = "Нажми меня";
+// newButton.style.backgroundColor = "red";
+// newButton.style.color = "white";
+// newButton.style.padding = "10px 20px";
+// newButton.style.border = "none";
+// newButton.style.borderRadius = "5px";
+// newButton.style.margin = "10px";
+// newButton.addEventListener('click', function () {
+//     alert("Привет, мир!");
+// });
+
+// container.appendChild(newDiv);
+// container.appendChild(newButton);
+// document.body.appendChild(container);
