@@ -1,6 +1,8 @@
 // Импорт модуля
-import './shopping-cart.js';
+import { addProductToCart } from './shopping-cart.js';
 console.log('Импорт модуля');
+addProductToCart('рубашка', 2);
+
 // import {
 //   addProductToCart,
 //   totalPrice as price,
