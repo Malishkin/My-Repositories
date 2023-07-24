@@ -1,7 +1,7 @@
 // Импорт модуля
-import { addProductToCart } from './shopping-cart.js';
-console.log('Импорт модуля');
-addProductToCart('рубашка', 2);
+// import { addProductToCart } from './shopping-cart.js';
+// console.log('Импорт модуля');
+// addProductToCart('рубашка', 2);
 
 // import {
 //   addProductToCart,
@@ -9,7 +9,7 @@ addProductToCart('рубашка', 2);
 //   quantity,
 // } from './shopping-cart.js';
 
-// // console.log(shippingCost);
+// console.log(shippingCost);
 
 // addProductToCart('рубашка', 2);
 // console.log(price, quantity);
@@ -19,7 +19,10 @@ addProductToCart('рубашка', 2);
 // console.log('Импорт модуля');
 
 // ShoppingCart.addProductToCart('рубашка', 2);
-// console.log(ShoppingCart.totalPrice);
+// console.log(ShoppingCart.totalPrice, ShoppingCart.quantity);
+
+// import addToCart from './shopping-cart.js';
+// addToCart('рубашка', 2);
 
 // import addToCart, {
 //   addProductToCart,
@@ -35,6 +38,11 @@ addProductToCart('рубашка', 2);
 
 // console.log(cart);
 
+// const result = await fetch('https://jsonplaceholder.typicode.com/posts');
+// const data = await result.json();
+// console.log(data);
+// console.log('Код после await');
+
 // // const result = await fetch('https://jsonplaceholder.typicode.com/posts');
 // // const data = await result.json();
 // // console.log(data);
@@ -49,7 +57,7 @@ addProductToCart('рубашка', 2);
 // };
 
 // const lastPostData = getLastPost();
-// console.log(lastPostData);
+// console.log(lastPostData); так не работает, т.к. функция асинхронная и возвращается промис
 // lastPostData.then(data => console.log(data));
 
 // const lastPostData1 = await getLastPost();
@@ -58,6 +66,31 @@ addProductToCart('рубашка', 2);
 ///////////////////////////////////////////////
 // Шаблон Проектирования Модуль
 
+// const ShoppingCart1 = (function () {
+//   const cart = [];
+//   const shippingCost = 20;
+//   const totalPrice = 300;
+//   const totalQuantity = 10;
+//   const addProductToCart = function (product, quantity) {
+//     cart.push({ product, quantity });
+//     console.log(
+//       `${product} в количестве ${quantity} шт добавлено в корзину, цена доставки ${shippingCost}`
+//     );
+//   };
+
+//   const productOrderedMessage = function (product, quantity) {
+//     console.log(`${product} в количестве ${quantity} шт заказан`);
+//   };
+
+//   return {
+//     addProductToCart,
+//     cart,
+//     totalPrice,
+//     totalQuantity,
+//   };
+// })();
+// ShoppingCart1.addProductToCart('апельсин', 5);
+// ShoppingCart1.addProductToCart('кола', 1);
 // const ShoppingCart1 = (function () {
 //   const cart = [];
 //   const shippingCost = 20;
