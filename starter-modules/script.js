@@ -144,8 +144,11 @@ const state = {
   user: { loggedIn: true },
 };
 const stateCopy = Object.assign({}, state);
-
+const stateDeepCopy = cloneDeep(state);
+state.user.loggedIn = false;
 console.log('stateCopy: ', stateCopy);
+
+console.log('stateDeepCopy: ', stateDeepCopy);
 
 // import cloneDeep from 'lodash';
 
