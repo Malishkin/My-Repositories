@@ -135,7 +135,17 @@
 
 ////////////////////////////////////////////////
 // Использование библиотеки lodash-es
-// import cloneDeep from './node_modules/lodash-es/cloneDeep.js';
+import cloneDeep from '../node_modules/lodash-es/cloneDeep.js';
+const state = {
+  cart: [
+    { product: 'яблоко', quantity: 5 },
+    { product: 'апельсин', quantity: 3 },
+  ],
+  user: { loggedIn: true },
+};
+const stateCopy = Object.assign({}, state);
+
+console.log('stateCopy: ', stateCopy);
 
 // import cloneDeep from 'lodash';
 
