@@ -30,11 +30,11 @@
 //   quantity,
 // } from './shopping-cart.js';
 
-// import addToCart, { cart } from './shopping-cart.js';
+import addToCart, { cart } from './shopping-cart.js';
 
-// addToCart('рубашка', 2);
-// addToCart('носки', 2);
-// addToCart('трусы', 2);
+addToCart('рубашка', 2);
+addToCart('носки', 2);
+addToCart('трусы', 2);
 
 // console.log(cart);
 
