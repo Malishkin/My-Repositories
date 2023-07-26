@@ -135,7 +135,8 @@ addToCart('трусы', 2);
 
 ////////////////////////////////////////////////
 // Использование библиотеки lodash-es
-import cloneDeep from '../node_modules/lodash-es/cloneDeep.js';
+// import cloneDeep from '../node_modules/lodash-es/cloneDeep.js';
+import cloneDeep from 'lodash';
 const state = {
   cart: [
     { product: 'яблоко', quantity: 5 },
@@ -149,6 +150,10 @@ state.user.loggedIn = false;
 console.log('stateCopy: ', stateCopy);
 
 console.log('stateDeepCopy: ', stateDeepCopy);
+
+if (module.hot) {
+  module.hot.accept();
+}
 
 // import cloneDeep from 'lodash';
 
