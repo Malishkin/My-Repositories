@@ -155,6 +155,10 @@ if (module.hot) {
   module.hot.accept();
 }
 
+Promise.resolve('Testing').then(a => console.log(a));
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
+
 // import cloneDeep from 'lodash';
 
 // const state = {
